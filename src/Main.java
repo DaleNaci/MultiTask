@@ -16,22 +16,31 @@ import javafx.event.*;
 import javafx.scene.input.*;
 import javafx.scene.text.*;
 
-public class Main extends Application {
+public class Main extends Application implements EventHandler<InputEvent> {
 
+    GraphicsContext gc;
     Canvas canvas;
     AnimateObjects animate;
+    int x;
+    int y;
 
     public class AnimateObjects extends AnimationTimer {
         public void handle(long now)
         {
-
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            Rectangle2D rect1 = new Rectangle2D(400, 100, 100, 100);
+            gc.fillRect(400, 100, 100, 100);
         }
     }
 
-    public static void main(String[] args) { launch(); }
+    public static void main(String[] args)
+    {
+        launch();
+    }
 
     public void start(Stage stage)
     {
+
         stage.setTitle("MultiTask");
         Group root = new Group();
         canvas = new Canvas(800, 400);
@@ -39,10 +48,28 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
 
+        gc = canvas.getGraphicsContext2D();
+
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, this);
+
         animate = new AnimateObjects();
         animate.start();
 
         stage.show();
+    }
+
+    public void handle(final InputEvent event)
+    {
+        if (event instanceof KeyEvent) {
+            if (((KeyEvent)event).getCode() == KeyCode.LEFT)
+                x-=1;
+            if (((KeyEvent)event).getCode() == KeyCode.RIGHT)
+                x+=1;
+            if (((KeyEvent)event).getCode() == KeyCode.UP)
+                y+=1;
+            if (((KeyEvent)event).getCode() == KeyCode.DOWN)
+                y-=1;
+        }
     }
 
 

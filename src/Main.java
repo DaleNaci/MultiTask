@@ -19,7 +19,7 @@ import javafx.event.*;
 import javafx.scene.input.*;
 import javafx.scene.text.*;
 
-public class Main extends Application implements EventHandler<InputEvent> {
+public class Main extends Application {
 
     // Define global variables
     GraphicsContext gc;
@@ -28,7 +28,8 @@ public class Main extends Application implements EventHandler<InputEvent> {
     int x_p1;
     int y_p1;
     Image player1;
-
+    double velx_p1;
+    double vely_p1;
 
 
 
@@ -52,6 +53,8 @@ public class Main extends Application implements EventHandler<InputEvent> {
             // GAME 1
             player1 = new Image("game1/player.JPG");
             gc.drawImage(player1, x_p1, y_p1);
+            x_p1 += velx_p1;
+            y_p1 += vely_p1;
 
             Rectangle2D hitbox_player1 = new Rectangle2D(x_p1, y_p1, 50, 50);
 
@@ -85,11 +88,31 @@ public class Main extends Application implements EventHandler<InputEvent> {
         y_p1 = 0;
 
 
+        // Checks for Key Presses
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent event) {
+                switch ((event).getCode()) {
+                    //PLAYER 1
+                    case W: vely_p1 = -3; break;
+                    case A: velx_p1 = -3; break;
+                    case S: vely_p1 =  3; break;
+                    case D: velx_p1 =  3; break;
+                }
+            }
+        });
 
-
-
-
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, this);
+        // Checks for Key Releases
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent event) {
+                switch ((event).getCode()) {
+                    //PLAYER 1
+                    case W: vely_p1 = 0; break;
+                    case A: velx_p1 = 0; break;
+                    case S: vely_p1 = 0; break;
+                    case D: velx_p1 = 0; break;
+                }
+            }
+        });
 
         // STANDARD CODE
 
@@ -98,23 +121,6 @@ public class Main extends Application implements EventHandler<InputEvent> {
 
         stage.show();
     }
-
-    public void handle(final InputEvent event)
-    {
-
-        // Checking for Key Logs
-        if (event instanceof KeyEvent) {
-            if (((KeyEvent)event).getCode() == KeyCode.W)
-                y_p1-=1;
-            if (((KeyEvent)event).getCode() == KeyCode.A)
-                x_p1-=1;
-            if (((KeyEvent)event).getCode() == KeyCode.S)
-                y_p1+=1;
-            if (((KeyEvent)event).getCode() == KeyCode.D)
-                x_p1+=1;
-        }
-    }
-
 
 
 }

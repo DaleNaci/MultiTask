@@ -39,15 +39,7 @@ public class Main extends Application {
         public void handle(long now)
         {
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-
-
-            // BOUNDS
-            Rectangle2D bounds2 = new Rectangle2D(300, 0, 300, 300);
-            gc.fillRect(300, 0, 300, 300);
-
             gc = canvas.getGraphicsContext2D();
-
 
 
             // GAME 1
@@ -56,7 +48,17 @@ public class Main extends Application {
             x_p1 += velx_p1;
             y_p1 += vely_p1;
 
-            Rectangle2D hitbox_player1 = new Rectangle2D(x_p1, y_p1, 50, 50);
+            // Bounds
+            if (x_p1 < 0)
+                x_p1 = 0;
+            if (x_p1 > 250)
+                x_p1 = 250;
+            if (y_p1 < 0)
+                y_p1 = 0;
+            if (y_p1 > 250)
+                y_p1 = 250;
+
+            Rectangle2D hitbox_p1 = new Rectangle2D(x_p1, y_p1, 50, 50);
 
 
         }
@@ -93,10 +95,10 @@ public class Main extends Application {
             public void handle(KeyEvent event) {
                 switch ((event).getCode()) {
                     //PLAYER 1
-                    case W: vely_p1 = -3; break;
-                    case A: velx_p1 = -3; break;
-                    case S: vely_p1 =  3; break;
-                    case D: velx_p1 =  3; break;
+                    case W: vely_p1 = -2; break;
+                    case A: velx_p1 = -2; break;
+                    case S: vely_p1 =  2; break;
+                    case D: velx_p1 =  2; break;
                 }
             }
         });

@@ -18,12 +18,14 @@ import javafx.scene.text.*;
 
 public class Main extends Application implements EventHandler<InputEvent> {
 
+    // Define global variables
     GraphicsContext gc;
     Canvas canvas;
     AnimateObjects animate;
     int x;
     int y;
 
+    // Repeated actions
     public class AnimateObjects extends AnimationTimer {
         public void handle(long now)
         {
@@ -38,9 +40,9 @@ public class Main extends Application implements EventHandler<InputEvent> {
         launch();
     }
 
+    // Initial stage creation (not init)
     public void start(Stage stage)
     {
-
         stage.setTitle("MultiTask");
         Group root = new Group();
         canvas = new Canvas(800, 400);
@@ -60,6 +62,7 @@ public class Main extends Application implements EventHandler<InputEvent> {
 
     public void handle(final InputEvent event)
     {
+        // Checking for Key Logs
         if (event instanceof KeyEvent) {
             if (((KeyEvent)event).getCode() == KeyCode.LEFT)
                 x-=1;

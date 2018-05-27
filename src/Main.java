@@ -21,19 +21,21 @@ import javafx.scene.text.*;
 
 public class Main extends Application {
 
-    // Define global variables
-    GraphicsContext gc;
-    Canvas canvas;
-    AnimateObjects animate;
-    double x_p1;
-    double y_p1;
-    Image player1;
-    double velx_p1;
-    double vely_p1;
-    double canvas_width;
-    double canvas_height;
-    double p1_width;
-    double p1_height;
+    // Define Global Variables
+    private GraphicsContext gc;
+    private Canvas canvas;
+    private AnimateObjects animate;
+    private double canvas_width;
+    private double canvas_height;
+
+    // Game 1 Variables
+    private double x_p1;
+    private double y_p1;
+    private Image player1;
+    private double velx_p1;
+    private double vely_p1;
+    private double p1_width;
+    private double p1_height;
 
 
 

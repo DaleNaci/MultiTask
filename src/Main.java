@@ -25,9 +25,11 @@ public class Main extends Application implements EventHandler<InputEvent> {
     GraphicsContext gc;
     Canvas canvas;
     AnimateObjects animate;
-    int x;
-    int y;
+    int x_p1;
+    int y_p1;
     Image player1;
+
+
 
 
 
@@ -36,15 +38,22 @@ public class Main extends Application implements EventHandler<InputEvent> {
         public void handle(long now)
         {
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            /*Rectangle2D rect1 = new Rectangle2D(400, 100, 100, 100);
-            gc.fillRect(400, 100, 100, 100);*/
 
-            Rectangle2D bounds1 = new Rectangle2D(300, 0, 300, 300);
+
+
+            // BOUNDS
+            Rectangle2D bounds2 = new Rectangle2D(300, 0, 300, 300);
             gc.fillRect(300, 0, 300, 300);
 
             gc = canvas.getGraphicsContext2D();
+
+
+
+            // GAME 1
             player1 = new Image("game1/player.JPG");
-            gc.drawImage(player1, 0, 0);
+            gc.drawImage(player1, x_p1, y_p1);
+
+            Rectangle2D hitbox_player1 = new Rectangle2D(x_p1, y_p1, 50, 50);
 
 
         }
@@ -58,6 +67,7 @@ public class Main extends Application implements EventHandler<InputEvent> {
     // Initial stage creation (not init)
     public void start(Stage stage)
     {
+        // STANDARD CODE
         stage.setTitle("MultiTask");
         Group root = new Group();
         canvas = new Canvas(600, 600);
@@ -65,9 +75,23 @@ public class Main extends Application implements EventHandler<InputEvent> {
         Scene scene = new Scene(root);
         stage.setScene(scene);
 
+        // NON-STANDARD CODE
         gc = canvas.getGraphicsContext2D();
 
+
+
+        //GAME 1
+        x_p1 = 0;
+        y_p1 = 0;
+
+
+
+
+
+
         scene.addEventHandler(KeyEvent.KEY_PRESSED, this);
+
+        // STANDARD CODE
 
         animate = new AnimateObjects();
         animate.start();
@@ -80,14 +104,14 @@ public class Main extends Application implements EventHandler<InputEvent> {
 
         // Checking for Key Logs
         if (event instanceof KeyEvent) {
-            if (((KeyEvent)event).getCode() == KeyCode.LEFT)
-                x-=1;
-            if (((KeyEvent)event).getCode() == KeyCode.RIGHT)
-                x+=1;
-            if (((KeyEvent)event).getCode() == KeyCode.UP)
-                y+=1;
-            if (((KeyEvent)event).getCode() == KeyCode.DOWN)
-                y-=1;
+            if (((KeyEvent)event).getCode() == KeyCode.W)
+                y_p1-=1;
+            if (((KeyEvent)event).getCode() == KeyCode.A)
+                x_p1-=1;
+            if (((KeyEvent)event).getCode() == KeyCode.S)
+                y_p1+=1;
+            if (((KeyEvent)event).getCode() == KeyCode.D)
+                x_p1+=1;
         }
     }
 

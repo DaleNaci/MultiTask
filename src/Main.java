@@ -29,13 +29,13 @@ public class Main extends Application {
     private double canvas_height;
 
     // Game 1 Variables
-    private double x_p1;
-    private double y_p1;
-    private Image player1;
-    private double velx_p1;
-    private double vely_p1;
-    private double p1_width;
-    private double p1_height;
+    private double x_p1;       // X Position of Player 1
+    private double y_p1;       // Y Position of Player 1
+    private Image player1;     // Player 1 Image
+    private double velx_p1;    // X Velocity of Player 1
+    private double vely_p1;    // Y Velocity of Player 1
+    private double p1_width;   // Width of Player 1
+    private double p1_height;  // Height of Player 1
 
 
 
@@ -47,24 +47,30 @@ public class Main extends Application {
             gc = canvas.getGraphicsContext2D();
 
 
-            // GAME 1
+            /* ----------------------------------------
+               -----------------Game 1-----------------
+               ---------------------------------------- */
+
+            // Creating Player 1
             player1 = new Image("game1/player.JPG");
             gc.drawImage(player1, x_p1, y_p1);
 
+            // Setting the dimension variables of Player 1
             p1_width = player1.getWidth();
             p1_height = player1.getHeight();
 
+            // Changing position through a constant velocity
             x_p1 += velx_p1;
             y_p1 += vely_p1;
 
             // Bounds
-            if (x_p1 < 0)
+            if (x_p1 < 0)                                // Left Bounds
                 x_p1 = 0;
-            if (x_p1 > (canvas_width / 2) - p1_width)
+            if (x_p1 > (canvas_width / 2) - p1_width)    // Right Bounds
                 x_p1 = (canvas_width / 2) - p1_width;
-            if (y_p1 < 0)
+            if (y_p1 < 0)                                // Upper Bounds
                 y_p1 = 0;
-            if (y_p1 > (canvas_height / 2) - p1_height)
+            if (y_p1 > (canvas_height / 2) - p1_height)  // Lower Bounds
                 y_p1 = (canvas_height / 2) - p1_height;
 
             Rectangle2D hitbox_p1 = new Rectangle2D(x_p1, y_p1, 50, 50);
@@ -94,8 +100,6 @@ public class Main extends Application {
         canvas_width = canvas.getWidth();
         canvas_height = canvas.getHeight();
 
-
-
         //GAME 1
         x_p1 = 0;
         y_p1 = 0;
@@ -106,10 +110,10 @@ public class Main extends Application {
             public void handle(KeyEvent event) {
                 switch ((event).getCode()) {
                     //PLAYER 1
-                    case W: vely_p1 = -2; break;
-                    case A: velx_p1 = -2; break;
-                    case S: vely_p1 =  2; break;
-                    case D: velx_p1 =  2; break;
+                    case W: vely_p1 = -2; break;  // UP
+                    case A: velx_p1 = -2; break;  // LEFT
+                    case S: vely_p1 =  2; break;  // DOWN
+                    case D: velx_p1 =  2; break;  // RIGHT
                 }
             }
         });
@@ -119,10 +123,10 @@ public class Main extends Application {
             public void handle(KeyEvent event) {
                 switch ((event).getCode()) {
                     //PLAYER 1
-                    case W: vely_p1 = 0; break;
-                    case A: velx_p1 = 0; break;
-                    case S: vely_p1 = 0; break;
-                    case D: velx_p1 = 0; break;
+                    case W: vely_p1 = 0; break;  // UP
+                    case A: velx_p1 = 0; break;  // LEFT
+                    case S: vely_p1 = 0; break;  // DOWN
+                    case D: velx_p1 = 0; break;  // RIGHT
                 }
             }
         });

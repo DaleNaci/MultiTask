@@ -45,7 +45,7 @@ public class Main extends Application implements EventHandler<InputEvent> {
     {
         stage.setTitle("MultiTask");
         Group root = new Group();
-        canvas = new Canvas(800, 400);
+        canvas = new Canvas(600, 600);
         root.getChildren().add(canvas);
         Scene scene = new Scene(root);
         stage.setScene(scene);

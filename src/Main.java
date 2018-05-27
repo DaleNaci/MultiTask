@@ -2,6 +2,9 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -24,14 +27,26 @@ public class Main extends Application implements EventHandler<InputEvent> {
     AnimateObjects animate;
     int x;
     int y;
+    Image player1;
+
+
 
     // Repeated actions
     public class AnimateObjects extends AnimationTimer {
         public void handle(long now)
         {
             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-            Rectangle2D rect1 = new Rectangle2D(400, 100, 100, 100);
-            gc.fillRect(400, 100, 100, 100);
+            /*Rectangle2D rect1 = new Rectangle2D(400, 100, 100, 100);
+            gc.fillRect(400, 100, 100, 100);*/
+
+            Rectangle2D bounds1 = new Rectangle2D(300, 0, 300, 300);
+            gc.fillRect(300, 0, 300, 300);
+
+            gc = canvas.getGraphicsContext2D();
+            player1 = new Image("game1/player.JPG");
+            gc.drawImage(player1, 0, 0);
+
+
         }
     }
 
@@ -62,6 +77,7 @@ public class Main extends Application implements EventHandler<InputEvent> {
 
     public void handle(final InputEvent event)
     {
+
         // Checking for Key Logs
         if (event instanceof KeyEvent) {
             if (((KeyEvent)event).getCode() == KeyCode.LEFT)

@@ -25,13 +25,15 @@ public class Main extends Application {
     GraphicsContext gc;
     Canvas canvas;
     AnimateObjects animate;
-    int x_p1;
-    int y_p1;
+    double x_p1;
+    double y_p1;
     Image player1;
     double velx_p1;
     double vely_p1;
     double canvas_width;
     double canvas_height;
+    double p1_width;
+    double p1_height;
 
 
 
@@ -39,8 +41,6 @@ public class Main extends Application {
     public class AnimateObjects extends AnimationTimer {
         public void handle(long now)
         {
-            canvas_width = canvas.getWidth();
-            canvas_height = canvas.getHeight();
             gc.clearRect(0, 0, canvas_width, canvas_height);
             gc = canvas.getGraphicsContext2D();
 
@@ -49,6 +49,8 @@ public class Main extends Application {
             player1 = new Image("game1/player.JPG");
             gc.drawImage(player1, x_p1, y_p1);
 
+            p1_width = player1.getWidth();
+            p1_height = player1.getHeight();
 
             x_p1 += velx_p1;
             y_p1 += vely_p1;
@@ -56,12 +58,12 @@ public class Main extends Application {
             // Bounds
             if (x_p1 < 0)
                 x_p1 = 0;
-            if (x_p1 > (canvas_width / 2) - )
-                x_p1 = 250;
+            if (x_p1 > (canvas_width / 2) - p1_width)
+                x_p1 = (canvas_width / 2) - p1_width;
             if (y_p1 < 0)
                 y_p1 = 0;
-            if (y_p1 > 250)
-                y_p1 = 250;
+            if (y_p1 > (canvas_height / 2) - p1_height)
+                y_p1 = (canvas_height / 2) - p1_height;
 
             Rectangle2D hitbox_p1 = new Rectangle2D(x_p1, y_p1, 50, 50);
 
@@ -87,6 +89,8 @@ public class Main extends Application {
 
         // NON-STANDARD CODE
         gc = canvas.getGraphicsContext2D();
+        canvas_width = canvas.getWidth();
+        canvas_height = canvas.getHeight();
 
 
 

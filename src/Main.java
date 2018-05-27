@@ -30,7 +30,8 @@ public class Main extends Application {
     Image player1;
     double velx_p1;
     double vely_p1;
-
+    double canvas_width;
+    double canvas_height;
 
 
 
@@ -38,20 +39,24 @@ public class Main extends Application {
     public class AnimateObjects extends AnimationTimer {
         public void handle(long now)
         {
-            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            canvas_width = canvas.getWidth();
+            canvas_height = canvas.getHeight();
+            gc.clearRect(0, 0, canvas_width, canvas_height);
             gc = canvas.getGraphicsContext2D();
 
 
             // GAME 1
             player1 = new Image("game1/player.JPG");
             gc.drawImage(player1, x_p1, y_p1);
+
+
             x_p1 += velx_p1;
             y_p1 += vely_p1;
 
             // Bounds
             if (x_p1 < 0)
                 x_p1 = 0;
-            if (x_p1 > 250)
+            if (x_p1 > (canvas_width / 2) - )
                 x_p1 = 250;
             if (y_p1 < 0)
                 y_p1 = 0;

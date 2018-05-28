@@ -36,7 +36,13 @@ public class Main extends Application {
     private double vely_p1;    // Y Velocity of Player 1
     private double p1_width;   // Width of Player 1
     private double p1_height;  // Height of Player 1
+    private Image enemy_g1;    // Enemy
+    private double x_e1;       // X Position of Enemy
+    private double y_e1;       // Y Position of Enemy
+    private double temp_x;     // New X Position of Enemy
+    private double temp_y;     // New Y Position of Enemy
 
+    private boolean temp_bool;
 
 
     // Repeated actions
@@ -66,6 +72,28 @@ public class Main extends Application {
             // Changing position through a constant velocity
             x_p1 += velx_p1;
             y_p1 += vely_p1;
+
+            // Creating Enemy
+            enemy_g1 = new Image("game1/5.png", 50, 50, true, true);
+
+
+            // Changing Enemy position
+            if (temp_bool) {
+                temp_x = (Math.random()) * (301 - enemy_g1.getWidth());
+                temp_y = (Math.random()) * (301 - enemy_g1.getHeight());
+                while (temp_x > x_p1 && temp_x < x_p1 + p1_width) {
+                    temp_x = (Math.random()) * (301 - enemy_g1.getWidth());
+                }
+                while (temp_y > y_p1 && temp_y < y_p1 + p1_height) {
+                    temp_y = (Math.random()) * (301 - enemy_g1.getHeight());
+                }
+                x_e1 = temp_x;
+                y_e1 = temp_y;
+
+                temp_bool = false;
+            }
+            gc.drawImage(enemy_g1, x_e1, y_e1);
+
 
             // Bounds
             if (x_p1 < 0)                                // Left Bounds
@@ -105,11 +133,11 @@ public class Main extends Application {
         canvas_height = canvas.getHeight();
 
         //GAME 1
-        x_p1 = 0;
-        y_p1 = 0;
+        x_p1 = 125;
+        y_p1 = 125;
 
-
-
+        // TEMP
+        temp_bool = true;
 
         // Checks for Key Presses
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {

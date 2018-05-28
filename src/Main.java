@@ -51,6 +51,10 @@ public class Main extends Application {
                -----------------Game 1-----------------
                ---------------------------------------- */
 
+            // Setting Background to light red
+            gc.setFill(Color.rgb(242, 184, 184));
+            gc.fillRect(0, 0, 300, 300);
+
             // Creating Player 1
             player1 = new Image("game1/player.JPG");
             gc.drawImage(player1, x_p1, y_p1);
@@ -103,6 +107,8 @@ public class Main extends Application {
         //GAME 1
         x_p1 = 0;
         y_p1 = 0;
+
+
 
 
         // Checks for Key Presses

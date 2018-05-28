@@ -39,8 +39,8 @@ public class Main extends Application {
     private Image enemy_g1;    // Enemy
     private double x_e1;       // X Position of Enemy
     private double y_e1;       // Y Position of Enemy
-    private double temp_x;     // New X Position of Enemy
-    private double temp_y;     // New Y Position of Enemy
+    private double change_x;     // New X Position of Enemy
+    private double change_y;     // New Y Position of Enemy
 
     private boolean temp_bool;
 
@@ -79,16 +79,16 @@ public class Main extends Application {
 
             // Changing Enemy position
             if (temp_bool) {
-                temp_x = (Math.random()) * (301 - enemy_g1.getWidth());
-                temp_y = (Math.random()) * (301 - enemy_g1.getHeight());
-                while (temp_x > x_p1 && temp_x < x_p1 + p1_width) {
-                    temp_x = (Math.random()) * (301 - enemy_g1.getWidth());
+                change_x = (Math.random()) * (301 - enemy_g1.getWidth());
+                change_y = (Math.random()) * (301 - enemy_g1.getHeight());
+                while (change_x > x_p1 && change_x < x_p1 + p1_width) {
+                    change_x = (Math.random()) * (301 - enemy_g1.getWidth());
                 }
-                while (temp_y > y_p1 && temp_y < y_p1 + p1_height) {
-                    temp_y = (Math.random()) * (301 - enemy_g1.getHeight());
+                while (change_y > y_p1 && change_y < y_p1 + p1_height) {
+                    change_y = (Math.random()) * (301 - enemy_g1.getHeight());
                 }
-                x_e1 = temp_x;
-                y_e1 = temp_y;
+                x_e1 = change_x;
+                y_e1 = change_y;
 
                 temp_bool = false;
             }

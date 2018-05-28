@@ -37,9 +37,6 @@ public class Main extends Application {
     private double p1_width;   // Width of Player 1
     private double p1_height;  // Height of Player 1
 
-    // Testing Transparency Variable
-    private Image test_transparency;
-
 
 
     // Repeated actions
@@ -69,10 +66,6 @@ public class Main extends Application {
             // Changing position through a constant velocity
             x_p1 += velx_p1;
             y_p1 += vely_p1;
-
-            // Testing Transparency
-            test_transparency = new Image("game1/test_transparency2.png");
-            gc.drawImage(test_transparency, 100, 100);
 
             // Bounds
             if (x_p1 < 0)                                // Left Bounds

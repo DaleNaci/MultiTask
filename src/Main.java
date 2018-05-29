@@ -27,21 +27,26 @@ public class Main extends Application {
     private AnimateObjects animate;
     private double canvas_width;
     private double canvas_height;
+    private boolean start;
 
     // Game 1 Variables
-    private double x_p1;       // X Position of Player 1
-    private double y_p1;       // Y Position of Player 1
-    private Image player1;     // Player 1 Image
-    private double velx_p1;    // X Velocity of Player 1
-    private double vely_p1;    // Y Velocity of Player 1
-    private double p1_width;   // Width of Player 1
-    private double p1_height;  // Height of Player 1
-    private Image enemy_g1;    // Enemy
-    private double x_e1;       // X Position of Enemy
-    private double y_e1;       // Y Position of Enemy
-    private double change_x;     // New X Position of Enemy
-    private double change_y;     // New Y Position of Enemy
+    private double x_p1;            // X Position of Player 1
+    private double y_p1;            // Y Position of Player 1
+    private Image player1;          // Player 1 Image
+    private double velx_p1;         // X Velocity of Player 1
+    private double vely_p1;         // Y Velocity of Player 1
+    private double p1_width;        // Width of Player 1
+    private double p1_height;       // Height of Player 1
+    private Image enemy_g1;         // Enemy
+    private double x_e1;            // X Position of Enemy
+    private double y_e1;            // Y Position of Enemy
+    private double change_x;        // New X Position of Enemy
+    private double change_y;        // New Y Position of Enemy
+    private Rectangle2D hitbox_p1;  // Hitbox of Player 1
+    private Rectangle2D hitbox_e1;  // Hitbox of Enemy 1
 
+
+    // Temporary Variables
     private boolean temp_bool;
 
 
@@ -76,23 +81,23 @@ public class Main extends Application {
             // Creating Enemy
             enemy_g1 = new Image("game1/5.png", 50, 50, true, true);
 
+            hitbox_e1 = new Rectangle2D(x_e1, y_e1, enemy_g1.getWidth(), enemy_g1.getHeight());
 
             // Changing Enemy position
-            if (temp_bool) {
+            if (start || hitbox_p1.intersects(hitbox_e1)) {
                 change_x = (Math.random()) * (301 - enemy_g1.getWidth());
                 change_y = (Math.random()) * (301 - enemy_g1.getHeight());
-                while (change_x > x_p1 && change_x < x_p1 + p1_width) {
+                while (change_x > (x_p1 - 10) && (change_x - 10) < x_p1 + p1_width) {
                     change_x = (Math.random()) * (301 - enemy_g1.getWidth());
                 }
-                while (change_y > y_p1 && change_y < y_p1 + p1_height) {
+                while (change_y > (y_p1 - 10) && (change_y - 10) < y_p1 + p1_height) {
                     change_y = (Math.random()) * (301 - enemy_g1.getHeight());
                 }
                 x_e1 = change_x;
                 y_e1 = change_y;
-
-                temp_bool = false;
             }
             gc.drawImage(enemy_g1, x_e1, y_e1);
+            hitbox_e1 = new Rectangle2D(x_e1, y_e1, enemy_g1.getWidth(), enemy_g1.getHeight());
 
 
             // Bounds
@@ -105,8 +110,11 @@ public class Main extends Application {
             if (y_p1 > (canvas_height / 2) - p1_height)  // Lower Bounds
                 y_p1 = (canvas_height / 2) - p1_height;
 
-            Rectangle2D hitbox_p1 = new Rectangle2D(x_p1, y_p1, 50, 50);
+            hitbox_p1 = new Rectangle2D(x_p1, y_p1, 50, 50);
 
+
+            // Setting "start" variable to false
+            start = false;
 
         }
     }
@@ -132,12 +140,12 @@ public class Main extends Application {
         canvas_width = canvas.getWidth();
         canvas_height = canvas.getHeight();
 
-        //GAME 1
+        // GAME 1
         x_p1 = 125;
         y_p1 = 125;
 
-        // TEMP
-        temp_bool = true;
+        // Setting Start variable to true
+        start = true;
 
         // Checks for Key Presses
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {

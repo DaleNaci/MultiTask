@@ -2,22 +2,14 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.SplitPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.*;
-import javafx.scene.media.AudioClip;
-import java.net.URL;
-import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.event.*;
 import javafx.scene.input.*;
-import javafx.scene.text.*;
 
 public class Main extends Application {
 
@@ -29,14 +21,9 @@ public class Main extends Application {
     private double canvas_height;
     private boolean start;
 
-    // Game 1 Variables
-    private double x_p1;            // X Position of Player 1
-    private double y_p1;            // Y Position of Player 1
-    private Image player1;          // Player 1 Image
-    private double velx_p1;         // X Velocity of Player 1
-    private double vely_p1;         // Y Velocity of Player 1
-    private double p1_width;        // Width of Player 1
-    private double p1_height;       // Height of Player 1
+    // Creating Player 1
+    private Player1 player1;
+
     private Image enemy_g1;         // Enemy
     private double x_e1;            // X Position of Enemy
     private double y_e1;            // Y Position of Enemy
@@ -44,10 +31,6 @@ public class Main extends Application {
     private double change_y;        // New Y Position of Enemy
     private Rectangle2D hitbox_p1;  // Hitbox of Player 1
     private Rectangle2D hitbox_e1;  // Hitbox of Enemy 1
-
-
-    // Temporary Variables
-    private boolean temp_bool;
 
 
     // Repeated actions
@@ -67,16 +50,12 @@ public class Main extends Application {
             gc.fillRect(0, 0, 300, 300);
 
             // Creating Player 1
-            player1 = new Image("game1/player.JPG");
-            gc.drawImage(player1, x_p1, y_p1);
-
-            // Setting the dimension variables of Player 1
-            p1_width = player1.getWidth();
-            p1_height = player1.getHeight();
+            gc.drawImage(player1.getImage(), player1.getX(), player1.getY());
 
             // Changing position through a constant velocity
-            x_p1 += velx_p1;
-            y_p1 += vely_p1;
+            player1.moveX();
+            player1.moveY();
+            // System.out.println(player1.getVelY());
 
             // Creating Enemy
             enemy_g1 = new Image("game1/5.png", 50, 50, true, true);
@@ -84,13 +63,13 @@ public class Main extends Application {
             hitbox_e1 = new Rectangle2D(x_e1, y_e1, enemy_g1.getWidth(), enemy_g1.getHeight());
 
             // Changing Enemy position
-            if (start || hitbox_p1.intersects(hitbox_e1)) {
+            if (start || player1.getHitbox().intersects(hitbox_e1)) {
                 change_x = (Math.random()) * (301 - enemy_g1.getWidth());
                 change_y = (Math.random()) * (301 - enemy_g1.getHeight());
-                while (change_x > (x_p1 - 10) && (change_x - 10) < x_p1 + p1_width) {
+                while (change_x > (player1.getX() - 10) && (change_x - 10) < player1.getX() + player1.getWidth()) {
                     change_x = (Math.random()) * (301 - enemy_g1.getWidth());
                 }
-                while (change_y > (y_p1 - 10) && (change_y - 10) < y_p1 + p1_height) {
+                while (change_y > (player1.getY() - 10) && (change_y - 10) < player1.getVelY() + player1.getHeight()) {
                     change_y = (Math.random()) * (301 - enemy_g1.getHeight());
                 }
                 x_e1 = change_x;
@@ -101,17 +80,16 @@ public class Main extends Application {
 
 
             // Bounds
-            if (x_p1 < 0)                                // Left Bounds
-                x_p1 = 0;
-            if (x_p1 > (canvas_width / 2) - p1_width)    // Right Bounds
-                x_p1 = (canvas_width / 2) - p1_width;
-            if (y_p1 < 0)                                // Upper Bounds
-                y_p1 = 0;
-            if (y_p1 > (canvas_height / 2) - p1_height)  // Lower Bounds
-                y_p1 = (canvas_height / 2) - p1_height;
+            if (player1.getX() < 0)                                          // Left Bounds
+                player1.setX(0);
+            if (player1.getX() > (canvas_width / 2) - player1.getWidth())    // Right Bounds
+                player1.setX((canvas_width / 2) - player1.getWidth());
+            if (player1.getY() < 0)                                          // Upper Bounds
+                player1.setY(0);
+            if (player1.getY() > (canvas_height / 2) - player1.getHeight())  // Lower Bounds
+                player1.setY((canvas_height / 2) - player1.getHeight());
 
-            hitbox_p1 = new Rectangle2D(x_p1, y_p1, 50, 50);
-
+            player1.setHitbox();
 
             // Setting "start" variable to false
             start = false;
@@ -140,22 +118,21 @@ public class Main extends Application {
         canvas_width = canvas.getWidth();
         canvas_height = canvas.getHeight();
 
-        // GAME 1
-        x_p1 = 125;
-        y_p1 = 125;
-
         // Setting Start variable to true
         start = true;
+
+        //Object creation
+        player1 = new Player1();
 
         // Checks for Key Presses
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
                 switch ((event).getCode()) {
                     //PLAYER 1
-                    case W: vely_p1 = -2; break;  // UP
-                    case A: velx_p1 = -2; break;  // LEFT
-                    case S: vely_p1 =  2; break;  // DOWN
-                    case D: velx_p1 =  2; break;  // RIGHT
+                    case W: player1.setVelY(-2); break; // UP
+                    case A: player1.setVelX(-2); break; // LEFT
+                    case S: player1.setVelY(2);  break; // DOWN
+                    case D: player1.setVelX(2);  break; // RIGHT
                 }
             }
         });
@@ -165,10 +142,10 @@ public class Main extends Application {
             public void handle(KeyEvent event) {
                 switch ((event).getCode()) {
                     //PLAYER 1
-                    case W: vely_p1 = 0; break;  // UP
-                    case A: velx_p1 = 0; break;  // LEFT
-                    case S: vely_p1 = 0; break;  // DOWN
-                    case D: velx_p1 = 0; break;  // RIGHT
+                    case W: player1.setVelY(0); break; // UP
+                    case A: player1.setVelX(0); break; // LEFT
+                    case S: player1.setVelY(0); break; // DOWN
+                    case D: player1.setVelX(0); break; // RIGHT
                 }
             }
         });

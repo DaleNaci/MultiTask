@@ -3,13 +3,13 @@ import javafx.geometry.Rectangle2D;
 
 public class Player1 {
 
-    private double x;            // X Position of Player 1
-    private double y;            // Y Position of Player 1
-    private Image image;          // Player 1 Image
-    private double velx;         // X Velocity of Player 1
-    private double vely;         // Y Velocity of Player 1
-    private double width;        // Width of Player 1
-    private double height;       // Height of Player 1
+    private double x;            // X Position
+    private double y;            // Y Position
+    private Image image;         // Image
+    private double velx;         // X Velocity
+    private double vely;         // Y Velocity
+    private double width;        // Width
+    private double height;       // Height
     private Rectangle2D hitbox;  // Hitbox
 
     // Default constructor

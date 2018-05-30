@@ -21,17 +21,18 @@ public class Main extends Application {
     private double canvas_height;
     private boolean start;
 
-    // Creating Player 1
+    // Object Declaration
     private Player1 player1;
+    private Enemy1 enemy1;
 
+    /*
     private Image enemy_g1;         // Enemy
     private double x_e1;            // X Position of Enemy
     private double y_e1;            // Y Position of Enemy
     private double change_x;        // New X Position of Enemy
     private double change_y;        // New Y Position of Enemy
-    private Rectangle2D hitbox_p1;  // Hitbox of Player 1
     private Rectangle2D hitbox_e1;  // Hitbox of Enemy 1
-
+    */
 
     // Repeated actions
     public class AnimateObjects extends AnimationTimer {
@@ -55,28 +56,22 @@ public class Main extends Application {
             // Changing position through a constant velocity
             player1.moveX();
             player1.moveY();
-            // System.out.println(player1.getVelY());
-
-            // Creating Enemy
-            enemy_g1 = new Image("game1/5.png", 50, 50, true, true);
-
-            hitbox_e1 = new Rectangle2D(x_e1, y_e1, enemy_g1.getWidth(), enemy_g1.getHeight());
 
             // Changing Enemy position
-            if (start || player1.getHitbox().intersects(hitbox_e1)) {
-                change_x = (Math.random()) * (301 - enemy_g1.getWidth());
-                change_y = (Math.random()) * (301 - enemy_g1.getHeight());
-                while (change_x > (player1.getX() - 10) && (change_x - 10) < player1.getX() + player1.getWidth()) {
-                    change_x = (Math.random()) * (301 - enemy_g1.getWidth());
+            if (start || player1.getHitbox().intersects(enemy1.getHitbox())) {
+                enemy1.setNew_x((Math.random()) * (301 - enemy1.getWidth()));
+                enemy1.setNew_y((Math.random()) * (301 - enemy1.getHeight()));
+                while (enemy1.getNew_x() > (player1.getX() - 10) && (enemy1.getNew_x() - 10) < player1.getX() + player1.getWidth()) {
+                    enemy1.setNew_x((Math.random()) * (301 - enemy1.getWidth()));
                 }
-                while (change_y > (player1.getY() - 10) && (change_y - 10) < player1.getVelY() + player1.getHeight()) {
-                    change_y = (Math.random()) * (301 - enemy_g1.getHeight());
+                while (enemy1.getNew_y() > (player1.getY() - 10) && (enemy1.getNew_y() - 10) < player1.getVelY() + player1.getHeight()) {
+                    enemy1.setNew_y((Math.random()) * (301 - enemy1.getHeight()));
                 }
-                x_e1 = change_x;
-                y_e1 = change_y;
+                enemy1.setX(enemy1.getNew_x());
+                enemy1.setY(enemy1.getNew_y());
             }
-            gc.drawImage(enemy_g1, x_e1, y_e1);
-            hitbox_e1 = new Rectangle2D(x_e1, y_e1, enemy_g1.getWidth(), enemy_g1.getHeight());
+            gc.drawImage(enemy1.getImage(), enemy1.getX(), enemy1.getY());
+            enemy1.setHitbox();
 
 
             // Bounds
@@ -123,6 +118,7 @@ public class Main extends Application {
 
         //Object creation
         player1 = new Player1();
+        enemy1 = new Enemy1();
 
         // Checks for Key Presses
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {

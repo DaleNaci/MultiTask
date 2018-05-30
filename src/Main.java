@@ -10,6 +10,8 @@ import javafx.scene.image.*;
 import javafx.geometry.Rectangle2D;
 import javafx.event.*;
 import javafx.scene.input.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Main extends Application {
 
@@ -25,14 +27,11 @@ public class Main extends Application {
     private Player1 player1;
     private Enemy1 enemy1;
 
-    /*
-    private Image enemy_g1;         // Enemy
-    private double x_e1;            // X Position of Enemy
-    private double y_e1;            // Y Position of Enemy
-    private double change_x;        // New X Position of Enemy
-    private double change_y;        // New Y Position of Enemy
-    private Rectangle2D hitbox_e1;  // Hitbox of Enemy 1
-    */
+    // Timer
+    private Timer timer = new Timer();
+    private TimerTask task;
+    private int seconds;
+
 
     // Repeated actions
     public class AnimateObjects extends AnimationTimer {
@@ -116,9 +115,26 @@ public class Main extends Application {
         // Setting Start variable to true
         start = true;
 
-        //Object creation
+        // Object creation
         player1 = new Player1();
         enemy1 = new Enemy1();
+
+        // Timer
+        seconds = 0;
+        task = new TimerTask() {
+            int max_seconds = 5;
+
+            public void run() {
+                if (seconds <= max_seconds) {
+                    System.out.println(seconds);
+                    seconds++;
+                }
+                else
+                    cancel();
+            }
+        };
+        timer.schedule(task, 0, 1000);
+
 
         // Checks for Key Presses
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {

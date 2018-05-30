@@ -58,15 +58,15 @@ public class Player1 {
     }
     public Rectangle2D getHitbox() { return hitbox; }
     public void setHitbox() {
-        hitbox = new Rectangle2D(getX(), getY(), 50, 50);
+        hitbox = new Rectangle2D(x, y, 50, 50);
     }
 
     // Moving methods
     public void moveX() {
-        setX(getX() + getVelX());
+        x += velx;
     }
     public void moveY() {
-        setY(getY() + getVelY());
+        y += vely;
     }
 
 

@@ -52,7 +52,7 @@ public class Enemy1 {
         return hitbox;
     }
     public void setHitbox() {
-        hitbox = new Rectangle2D(getX(), getY(), getWidth(), getHeight());
+        hitbox = new Rectangle2D(x, y, width, height);
     }
 
 

@@ -63,7 +63,7 @@ public class Main extends Application {
                 while (enemy1.getNew_x() > (player1.getX() - 10) && (enemy1.getNew_x() - 10) < player1.getX() + player1.getWidth()) {
                     enemy1.setNew_x((Math.random()) * (301 - enemy1.getWidth()));
                 }
-                while (enemy1.getNew_y() > (player1.getY() - 10) && (enemy1.getNew_y() - 10) < player1.getVelY() + player1.getHeight()) {
+                while (enemy1.getNew_y() > (player1.getY() - 10) && (enemy1.getNew_y() - 10) < player1.getY() + player1.getHeight()) {
                     enemy1.setNew_y((Math.random()) * (301 - enemy1.getHeight()));
                 }
                 enemy1.setX(enemy1.getNew_x());

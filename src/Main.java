@@ -65,6 +65,7 @@ public class Main extends Application {
                 enemy1.setX(enemy1.getNew_x());
                 enemy1.setY(enemy1.getNew_y());
                 enemy1.setCountdown(6);
+                framecount = 0;
             }
 
             if (framecount % 60 == 0) {

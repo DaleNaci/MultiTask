@@ -56,12 +56,16 @@ public class Enemy1 {
     public void setHitbox() {
         hitbox = new Rectangle2D(x, y, width, height);
     }
+    public int getCountdown() { return countdown; }
+    public void setCountdown(int countdown) { this.countdown = countdown; }
 
     // Other Methods
     public void changeImage() {
         countdown--;
         image = new Image("game1/" + countdown + ".png", 50, 50, true, true);
     }
+
+
 
 
 

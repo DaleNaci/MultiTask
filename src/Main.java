@@ -10,8 +10,6 @@ import javafx.scene.image.*;
 import javafx.geometry.Rectangle2D;
 import javafx.event.*;
 import javafx.scene.input.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Main extends Application {
 
@@ -28,9 +26,7 @@ public class Main extends Application {
     private Enemy1 enemy1;
 
     // Timer
-    private Timer timer = new Timer();
-    private TimerTask task;
-    private int seconds;
+    private int framecount;
 
 
     // Repeated actions
@@ -68,7 +64,14 @@ public class Main extends Application {
                 }
                 enemy1.setX(enemy1.getNew_x());
                 enemy1.setY(enemy1.getNew_y());
+                enemy1.setCountdown(6);
             }
+
+            if (framecount % 60 == 0) {
+                enemy1.changeImage();
+            }
+            framecount++;
+
             gc.drawImage(enemy1.getImage(), enemy1.getX(), enemy1.getY());
             enemy1.setHitbox();
 
@@ -119,22 +122,8 @@ public class Main extends Application {
         player1 = new Player1();
         enemy1 = new Enemy1();
 
-        // Timer
-        seconds = 0;
-        task = new TimerTask() {
-            int max_seconds = 5;
-
-            public void run() {
-                if (seconds <= max_seconds) {
-                    System.out.println(seconds);
-                    seconds++;
-                }
-                else
-                    cancel();
-            }
-        };
-        timer.schedule(task, 0, 1000);
-
+        // Timer Variable
+        framecount = 0;
 
         // Checks for Key Presses
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {

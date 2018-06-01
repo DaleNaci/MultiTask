@@ -11,9 +11,11 @@ public class Enemy1 {
     private double width;        // Width
     private double height;       // Height
     private Rectangle2D hitbox;  // Hitbox
+    private int countdown;       // Countdown from 5 to 0
 
     public Enemy1() {
-        image = new Image("game1/5.png", 50, 50, true, true);
+        countdown = 5;
+        image = new Image("game1/" + 5 + ".png", 50, 50, true, true);
         width = image.getWidth();
         height = image.getHeight();
     }
@@ -54,6 +56,13 @@ public class Enemy1 {
     public void setHitbox() {
         hitbox = new Rectangle2D(x, y, width, height);
     }
+
+    // Other Methods
+    public void changeImage() {
+        countdown--;
+        image = new Image("game1/" + countdown + ".png", 50, 50, true, true);
+    }
+
 
 
 

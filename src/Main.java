@@ -107,7 +107,7 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
 
-        // NON-STANDARD CODE
+        // Canvas Definitions
         gc = canvas.getGraphicsContext2D();
         canvas_width = canvas.getWidth();
         canvas_height = canvas.getHeight();
@@ -166,7 +166,6 @@ public class Main extends Application {
 
         animate = new AnimateObjects();
         animate.start();
-
         stage.show();
     }
 

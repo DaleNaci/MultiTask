@@ -6,8 +6,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.*;
-import javafx.geometry.Rectangle2D;
 import javafx.event.*;
 import javafx.scene.input.*;
 
@@ -25,14 +23,12 @@ public class Main extends Application {
     private Player1 player1;
     private Enemy1 enemy1;
 
-    // Timer
-    private int framecount;
-
 
     // Repeated actions
     public class AnimateObjects extends AnimationTimer {
         public void handle(long now)
         {
+            // Clear and set Graphics Context
             gc.clearRect(0, 0, canvas_width, canvas_height);
             gc = canvas.getGraphicsContext2D();
 
@@ -65,17 +61,17 @@ public class Main extends Application {
                 enemy1.setX(enemy1.getNew_x());
                 enemy1.setY(enemy1.getNew_y());
                 enemy1.setCountdown(6);
-                framecount = 0;
+                enemy1.setFramecount(0);
             }
 
-            if (framecount % 60 == 0) {
+            if (enemy1.getFramecount() % 60 == 0) {
                 enemy1.changeImage();
             }
-            framecount++;
+            enemy1.setFramecount(enemy1.getFramecount() + 1);
 
+            // Draw Enemy and Create the Hitbox
             gc.drawImage(enemy1.getImage(), enemy1.getX(), enemy1.getY());
             enemy1.setHitbox();
-
 
             // Bounds
             if (player1.getX() < 0)                                          // Left Bounds
@@ -89,9 +85,20 @@ public class Main extends Application {
 
             player1.setHitbox();
 
+
+            /* ----------------------------------------
+               -----------------Game 2-----------------
+               ---------------------------------------- */
+
+
+
+
+            /* ---------------------------------------
+               -------------Miscellaneous-------------
+               --------------------------------------- */
+
             // Setting "start" variable to false
             start = false;
-
         }
     }
 
@@ -123,9 +130,6 @@ public class Main extends Application {
         player1 = new Player1();
         enemy1 = new Enemy1();
 
-        // Timer Variable
-        framecount = 0;
-
         // Checks for Key Presses
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
@@ -153,7 +157,6 @@ public class Main extends Application {
         });
 
         // STANDARD CODE
-
         animate = new AnimateObjects();
         animate.start();
         stage.show();

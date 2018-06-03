@@ -12,12 +12,14 @@ public class Enemy1 {
     private double height;       // Height
     private Rectangle2D hitbox;  // Hitbox
     private int countdown;       // Countdown from 5 to 0
+    private int framecount;      // Frame Count
 
     public Enemy1() {
         countdown = 5;
         image = new Image("game1/" + 5 + ".png", 50, 50, true, true);
         width = image.getWidth();
         height = image.getHeight();
+        framecount = 0;
     }
 
     // Getters & Setters
@@ -58,6 +60,8 @@ public class Enemy1 {
     }
     public int getCountdown() { return countdown; }
     public void setCountdown(int countdown) { this.countdown = countdown; }
+    public int getFramecount() { return framecount; }
+    public void setFramecount(int framecount) { this.framecount = framecount; }
 
     // Other Methods
     public void changeImage() {

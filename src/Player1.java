@@ -69,7 +69,4 @@ public class Player1 {
         y += vely;
     }
 
-
-
-
 }

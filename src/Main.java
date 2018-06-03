@@ -23,6 +23,8 @@ public class Main extends Application {
     private Player1 player1;
     private Enemy1 enemy1;
 
+    private Player2 player2;
+
 
     // Repeated actions
     public class AnimateObjects extends AnimationTimer {
@@ -64,6 +66,7 @@ public class Main extends Application {
                 enemy1.setFramecount(0);
             }
 
+            // Change the image of Enemy every second
             if (enemy1.getFramecount() % 60 == 0) {
                 enemy1.changeImage();
             }
@@ -89,6 +92,10 @@ public class Main extends Application {
             /* ----------------------------------------
                -----------------Game 2-----------------
                ---------------------------------------- */
+
+            // Setting Background to light red
+            gc.setFill(Color.rgb(179, 194, 219, .5));
+            gc.fillRect(300, 0, 300, 300);
 
 
 

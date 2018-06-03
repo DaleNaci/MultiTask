@@ -1,7 +1,7 @@
 import javafx.scene.image.*;
 import javafx.geometry.Rectangle2D;
 
-public class Player2 extends Player{
+public class Player2{
 
     private Image image;        // Image
     private double x;           // X Position

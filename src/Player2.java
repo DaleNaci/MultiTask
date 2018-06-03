@@ -1,7 +1,7 @@
 import javafx.scene.image.*;
 import javafx.geometry.Rectangle2D;
 
-public class Player2 {
+public class Player2 extends Player{
 
     private Image image;        // Image
     private double x;           // X Position
@@ -11,5 +11,14 @@ public class Player2 {
     private double width;       // Width
     private double height;      // Height
     private Rectangle2D hitbox; // Hitbox
+
+    public Player2()
+    {
+        super();
+        image = new Image("game2/player2.png");
+        x = 450 - (width / 2);
+        y = 500;
+    }
+
 
 }

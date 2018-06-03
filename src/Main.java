@@ -23,7 +23,7 @@ public class Main extends Application {
     private Player1 player1;
     private Enemy1 enemy1;
 
-    private Player2 player2;
+    //private Player2 player2;
 
 
     // Repeated actions
@@ -96,6 +96,12 @@ public class Main extends Application {
             // Setting Background to light red
             gc.setFill(Color.rgb(179, 194, 219, .5));
             gc.fillRect(300, 0, 300, 300);
+
+
+
+
+
+
 
 
 

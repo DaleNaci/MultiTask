@@ -3,6 +3,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -22,8 +23,8 @@ public class Main extends Application {
     // Object Declaration
     private Player1 player1;
     private Enemy1 enemy1;
-
     private Player2 player2;
+    private Circle enemy2;
 
 
     // Repeated actions
@@ -102,7 +103,6 @@ public class Main extends Application {
             player2.setHitbox();
             gc.drawImage(player2.getImage(), player2.getX(), player2.getY());
 
-
             // Moving with a constant velocity
             player2.moveX();
 
@@ -111,6 +111,8 @@ public class Main extends Application {
                 player2.setX(canvas_width / 2);
             if (player2.getX() > (canvas_width - player2.getWidth()))   // Right Bounds
                 player2.setX(canvas_width - player2.getWidth());
+
+
 
 
 

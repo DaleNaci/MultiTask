@@ -17,7 +17,7 @@ public class Player1 {
     {
         x = 125;
         y = 125;
-        image = new Image("game1/player1.JPG");
+        image = new Image("game1/player.JPG");
         width = image.getWidth();
         height = image.getHeight();
     }

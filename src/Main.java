@@ -23,7 +23,7 @@ public class Main extends Application {
     private Player1 player1;
     private Enemy1 enemy1;
 
-    //private Player2 player2;
+    private Player2 player2;
 
 
     // Repeated actions
@@ -86,6 +86,7 @@ public class Main extends Application {
             if (player1.getY() > (canvas_height / 2) - player1.getHeight())  // Lower Bounds
                 player1.setY((canvas_height / 2) - player1.getHeight());
 
+            // Create Hitbox
             player1.setHitbox();
 
 
@@ -97,7 +98,19 @@ public class Main extends Application {
             gc.setFill(Color.rgb(179, 194, 219, .5));
             gc.fillRect(300, 0, 300, 300);
 
+            // Draw Enemy and Create the Hitbox
+            player2.setHitbox();
+            gc.drawImage(player2.getImage(), player2.getX(), player2.getY());
 
+
+            // Moving with a constant velocity
+            player2.moveX();
+
+            // Bounds
+            if (player2.getX() < (canvas_width / 2))                    // Left Bounds
+                player2.setX(canvas_width / 2);
+            if (player2.getX() > (canvas_width - player2.getWidth()))   // Right Bounds
+                player2.setX(canvas_width - player2.getWidth());
 
 
 
@@ -142,16 +155,20 @@ public class Main extends Application {
         // Object creation
         player1 = new Player1();
         enemy1 = new Enemy1();
+        player2 = new Player2();
 
         // Checks for Key Presses
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
                 switch ((event).getCode()) {
                     //PLAYER 1
-                    case W: player1.setVelY(-2); break; // UP
-                    case A: player1.setVelX(-2); break; // LEFT
-                    case S: player1.setVelY(2);  break; // DOWN
-                    case D: player1.setVelX(2);  break; // RIGHT
+                    case W:     player1.setVelY(-2); break; // UP P1
+                    case A:     player1.setVelX(-2); break; // LEFT P1
+                    case S:     player1.setVelY(2);  break; // DOWN P1
+                    case D:     player1.setVelX(2);  break; // RIGHT P1
+                    //PLAYER 2
+                    case LEFT:  player2.setVelX(-2); break; // LEFT P2
+                    case RIGHT: player2.setVelX(2);  break; // RIGHT P2
                 }
             }
         });
@@ -161,10 +178,14 @@ public class Main extends Application {
             public void handle(KeyEvent event) {
                 switch ((event).getCode()) {
                     //PLAYER 1
-                    case W: player1.setVelY(0); break; // UP
-                    case A: player1.setVelX(0); break; // LEFT
-                    case S: player1.setVelY(0); break; // DOWN
-                    case D: player1.setVelX(0); break; // RIGHT
+                    case W:     player1.setVelY(0); break; // UP P1
+                    case A:     player1.setVelX(0); break; // LEFT P1
+                    case S:     player1.setVelY(0); break; // DOWN P1
+                    case D:     player1.setVelX(0); break; // RIGHT P1
+                    //PLAYER 2
+                    case LEFT:  player2.setVelX(0); break; // LEFT P2
+                    case RIGHT: player2.setVelX(0); break; // RIGHT P2
+
                 }
             }
         });

@@ -157,6 +157,10 @@ public class Main extends Application {
                ---------------------------------------- */
 
 
+            // Setting Background to light green
+            gc.setFill(Color.rgb(184, 216, 184, .5));
+            gc.fillRect(300, 300, 300, 300);
+
 
 
 

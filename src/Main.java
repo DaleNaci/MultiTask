@@ -24,7 +24,7 @@ public class Main extends Application {
     private Player1 player1;
     private Enemy1 enemy1;
     private Player2 player2;
-    private Circle enemy2;
+    private Enemy2 enemy2;
 
 
     // Repeated actions
@@ -91,17 +91,20 @@ public class Main extends Application {
             player1.setHitbox();
 
 
+
             /* ----------------------------------------
                -----------------Game 2-----------------
                ---------------------------------------- */
+
+
 
             // Setting Background to light red
             gc.setFill(Color.rgb(179, 194, 219, .5));
             gc.fillRect(300, 0, 300, 300);
 
-            // Draw Enemy and Create the Hitbox
-            player2.setHitbox();
+            // Draw Player 2 and Create the Hitbox
             gc.drawImage(player2.getImage(), player2.getX(), player2.getY());
+            player2.setHitbox();
 
             // Moving with a constant velocity
             player2.moveX();
@@ -112,8 +115,46 @@ public class Main extends Application {
             if (player2.getX() > (canvas_width - player2.getWidth()))   // Right Bounds
                 player2.setX(canvas_width - player2.getWidth());
 
+            // Draw Enemy 2 and Create the Hitbox
+            gc.drawImage(enemy2.getImage(), enemy2.getX(), enemy2.getY());
+            enemy2.setHitbox();
+
+            // Bounds
+            if (enemy2.getX() < (canvas_width / 2))
+                enemy2.setVelX(enemy2.getVelX() * -1);
+            if (enemy2.getX() > (canvas_width - enemy2.getWidth()))
+                enemy2.setVelX(enemy2.getVelX() * -1);
+            if (enemy2.getY() < 0)
+                enemy2.setVelY(enemy2.getVelY() * -1);
+            if (enemy2.getY() > ((canvas_height / 2) - enemy2.getHeight()))
+                enemy2.setVelY(enemy2.getVelY() * -1);
+
+            // Move
+            enemy2.moveX();
+            enemy2.moveY();
+
+            // Changes direction when hitting Player 2
+            if (player2.getHitbox().intersects(enemy2.getHitbox()) && !enemy2.getHit()) {
+                enemy2.setVelX((Math.random() * 3) + 1);
+                enemy2.setVelY(enemy2.getVelY() * -1);
+                enemy2.setHit(true);
+            }
+
+            // Add one to framecount
+            if (enemy2.getHit())
+                enemy2.setFramecount(enemy2.getFramecount() + 1);
+
+            // Checking to reset framecount
+            if (enemy2.getFramecount() >= 20) {
+                enemy2.setHit(false);
+                enemy2.setFramecount(0);
+            }
 
 
+
+            /* ----------------------------------------
+               -----------------Game 3-----------------
+               ---------------------------------------- */
 
 
 
@@ -158,6 +199,7 @@ public class Main extends Application {
         player1 = new Player1();
         enemy1 = new Enemy1();
         player2 = new Player2();
+        enemy2 = new Enemy2();
 
         // Checks for Key Presses
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {

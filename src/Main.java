@@ -25,6 +25,7 @@ public class Main extends Application {
     private Enemy1 enemy1;
     private Player2 player2;
     private Enemy2 enemy2;
+    private Player3 player3;
 
 
     // Repeated actions
@@ -109,7 +110,7 @@ public class Main extends Application {
             // Moving with a constant velocity
             player2.moveX();
 
-            // Bounds
+            // Bounds for Player 2
             if (player2.getX() < (canvas_width / 2))                    // Left Bounds
                 player2.setX(canvas_width / 2);
             if (player2.getX() > (canvas_width - player2.getWidth()))   // Right Bounds
@@ -119,7 +120,7 @@ public class Main extends Application {
             gc.drawImage(enemy2.getImage(), enemy2.getX(), enemy2.getY());
             enemy2.setHitbox();
 
-            // Bounds
+            // Bounds for Enemy 2
             if (enemy2.getX() < (canvas_width / 2))
                 enemy2.setVelX(enemy2.getVelX() * -1);
             if (enemy2.getX() > (canvas_width - enemy2.getWidth()))
@@ -161,7 +162,9 @@ public class Main extends Application {
             gc.setFill(Color.rgb(184, 216, 184, .5));
             gc.fillRect(300, 300, 300, 300);
 
-
+            // Draw Player 2 and create hitbox
+            gc.drawImage(player3.getImage(), player3.getX(), player3.getY());
+            player3.setHitbox();
 
 
 
@@ -204,6 +207,7 @@ public class Main extends Application {
         enemy1 = new Enemy1();
         player2 = new Player2();
         enemy2 = new Enemy2();
+        player3 = new Player3();
 
         // Checks for Key Presses
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {

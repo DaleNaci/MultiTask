@@ -15,11 +15,15 @@ public class Player3 {
     private Rectangle2D hitbox; // Hitbox
 
     public Player3() {
-        image = new Image("game2/player.png");
+        image = new Image("game3/player.png");
         width = image.getWidth();
         height = image.getHeight();
         x = 450;
-        y = 450;
+        y = 400 - height;
+        velx = 0;
+        vely = 0;
+        accelx = 0;
+        accely = 1;
 
     }
 

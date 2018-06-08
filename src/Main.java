@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -158,13 +159,15 @@ public class Main extends Application {
                ---------------------------------------- */
 
 
-            // Setting Background to light green
-            gc.setFill(Color.rgb(184, 216, 184, .5));
+            // Setting Background to light purple
+            gc.setFill(Color.rgb(210, 165, 226, .5));
             gc.fillRect(300, 300, 300, 300);
 
             // Draw Player 2 and create hitbox
             gc.drawImage(player3.getImage(), player3.getX(), player3.getY());
             player3.setHitbox();
+
+
 
 
 
@@ -209,18 +212,26 @@ public class Main extends Application {
         enemy2 = new Enemy2();
         player3 = new Player3();
 
+        // Draw the ground for Game 3
+        Line line = new Line(300, 450, 600, 450);
+        line.setStroke(Color.BLACK);
+        line.setStrokeWidth(4);
+        root.getChildren().addAll(line);
+
         // Checks for Key Presses
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
                 switch ((event).getCode()) {
-                    //PLAYER 1
+                    // PLAYER 1
                     case W:     player1.setVelY(-2); break; // UP P1
                     case A:     player1.setVelX(-2); break; // LEFT P1
                     case S:     player1.setVelY(2);  break; // DOWN P1
                     case D:     player1.setVelX(2);  break; // RIGHT P1
-                    //PLAYER 2
+                    // PLAYER 2
                     case LEFT:  player2.setVelX(-2); break; // LEFT P2
                     case RIGHT: player2.setVelX(2);  break; // RIGHT P2
+                    // PLAYER 3
+                    case SPACE: player3.setVelY(3);  break; // JUMP P3
                 }
             }
         });
@@ -229,15 +240,15 @@ public class Main extends Application {
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
                 switch ((event).getCode()) {
-                    //PLAYER 1
+                    // PLAYER 1
                     case W:     player1.setVelY(0); break; // UP P1
                     case A:     player1.setVelX(0); break; // LEFT P1
                     case S:     player1.setVelY(0); break; // DOWN P1
                     case D:     player1.setVelX(0); break; // RIGHT P1
-                    //PLAYER 2
+                    // PLAYER 2
                     case LEFT:  player2.setVelX(0); break; // LEFT P2
                     case RIGHT: player2.setVelX(0); break; // RIGHT P2
-
+                    // PLAYER 3
                 }
             }
         });

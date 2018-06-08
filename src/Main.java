@@ -27,6 +27,7 @@ public class Main extends Application {
     private Player2 player2;
     private Enemy2 enemy2;
     private Player3 player3;
+    private Enemy3 enemy3;
 
 
     // Repeated actions
@@ -163,7 +164,7 @@ public class Main extends Application {
             gc.setFill(Color.rgb(210, 165, 226, .5));
             gc.fillRect(300, 300, 300, 300);
 
-            // Draw Player 2 and create hitbox
+            // Draw Player 3 and create hitbox
             gc.drawImage(player3.getImage(), player3.getX(), player3.getY());
             player3.setHitbox();
 
@@ -176,6 +177,12 @@ public class Main extends Application {
                 player3.setVelY(0);
                 player3.setCanJump(true);
             }
+
+            // Draw Enemy 3 and create hitbox
+            gc.drawImage(enemy3.getImage(), enemy3.getX(), enemy3.getY());
+            //enemy3.setHitbox();
+
+
 
 
 
@@ -219,6 +226,7 @@ public class Main extends Application {
         player2 = new Player2();
         enemy2 = new Enemy2();
         player3 = new Player3();
+        enemy3 = new Enemy3();
 
         // Draw the ground for Game 3
         Line line = new Line(300, 450, 600, 450);

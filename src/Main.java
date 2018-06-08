@@ -167,7 +167,15 @@ public class Main extends Application {
             gc.drawImage(player3.getImage(), player3.getX(), player3.getY());
             player3.setHitbox();
 
+            if (player3.getY() <= 450 - player3.getHeight() || player3.getVelY() != 0)
+                player3.moveY();
 
+            if (player3.getY() <= 450 - player3.getHeight())
+                player3.changeVelY();
+            else {
+                player3.setVelY(0);
+                player3.setCanJump(true);
+            }
 
 
 
@@ -231,7 +239,7 @@ public class Main extends Application {
                     case LEFT:  player2.setVelX(-2); break; // LEFT P2
                     case RIGHT: player2.setVelX(2);  break; // RIGHT P2
                     // PLAYER 3
-                    case SPACE: player3.setVelY(3);  break; // JUMP P3
+                    case SPACE: player3.jump();      break; // JUMP P3
                 }
             }
         });

@@ -217,7 +217,23 @@ public class Main extends Application {
                 player4.setY(600 - player4.getHeight());
 
             // Draw Enemy 4 and create hitbox
-            gc.drawImage(enemy4.getImage(), enemy4.getX(), enemy4.getY());
+            if (!enemy4.getHit())
+                gc.drawImage(enemy4.getImage(), enemy4.getX(), enemy4.getY());
+            enemy4.setHitbox();
+
+            // Move Enemy 4
+            enemy4.moveX();
+
+            // Change Hit to true if Enemy 4 is hit
+            if (player4.getHitbox().intersects(enemy4.getHitbox()))
+                enemy4.setHit(true);
+
+            // After a while, bring Enemy 4 back
+            if (enemy4.getX() <= -1 *(Math.random() * 500 + 200)) {
+                enemy4.place();
+                enemy4.setHit(false);
+            }
+
 
 
 

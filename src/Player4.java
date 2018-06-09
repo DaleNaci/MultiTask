@@ -33,7 +33,7 @@ public class Player4 {
     public double getWidth() { return width; }
     public void setWidth(double width) { this.width = width; }
     public Rectangle2D getHitbox() { return hitbox; }
-    public void setHitbox() { hitbox = new Rectangle2D(x, y, width, height / 2); }
+    public void setHitbox() { hitbox = new Rectangle2D(x, y, width, height * 2 / 3); }
 
     // Other Functions
     public void moveY() { y += vely; }

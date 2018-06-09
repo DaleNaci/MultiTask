@@ -10,16 +10,20 @@ public class Enemy4 {
     private double width;
     private double height;
     private Rectangle2D hitbox;
+    private double framecount;
+    private boolean hit;
 
     public Enemy4() {
         image = new Image("game4/enemy.png");
         width = image.getWidth();
         height = image.getHeight();
         x = 250;
-        y = 450 - (height / 2);
-        velx = 0;
+        y = (int)(Math.random() * (301 - height)) + 300;
+        velx = -1.5;
+        hit = false;
     }
 
+    // Getters & Setters
     public Image getImage() { return image; }
     public double getX() { return x; }
     public void setX(double x) { this.x = x; }
@@ -33,5 +37,14 @@ public class Enemy4 {
     public void setWidth(double width) { this.width = width; }
     public Rectangle2D getHitbox() { return hitbox; }
     public void setHitbox() { hitbox = new Rectangle2D(x, y, width, height); }
+    public boolean getHit() { return hit; }
+    public void setHit(boolean hit) { this.hit = hit; }
+
+    // Other Functions
+    public void moveX() { x += velx; }
+    public void place() {
+        y = (int)(Math.random() * (301 - height)) + 300;
+        x = 300 - width;
+    }
 
 }

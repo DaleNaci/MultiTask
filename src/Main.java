@@ -29,6 +29,7 @@ public class Main extends Application {
     private Player3 player3;
     private Enemy3 enemy3;
     private Player4 player4;
+    private Enemy4 enemy4;
 
 
 
@@ -202,8 +203,18 @@ public class Main extends Application {
             gc.setFill(Color.rgb(188, 226, 197, .5));
             gc.fillRect(0, 300, 300, 300);
 
+            // Draw Player 4 and create hitbox
             gc.drawImage(player4.getImage(), player4.getX(), player4.getY());
+            player4.setHitbox();
 
+            // Move Player 4
+            player4.moveY();
+
+            // Bounds
+            if (player4.getY() <= 300)
+                player4.setY(300);
+            if (player4.getY() >= 600 - player4.getHeight())
+                player4.setY(600 - player4.getHeight());
 
 
 
@@ -249,6 +260,8 @@ public class Main extends Application {
         player3 = new Player3();
         enemy3 = new Enemy3();
         player4 = new Player4();
+        enemy4 = new Enemy4();
+
 
         // Draw the ground for Game 3
         Line line = new Line(300, 450, 600, 450);
@@ -271,8 +284,8 @@ public class Main extends Application {
                     // PLAYER 3
                     case SPACE: player3.jump();      break; // JUMP P3
                     // PLAYER 4
-                    case UP:    player4.setVelY(-2); break; // UP P4
-                    case DOWN:  player4.setVelY(2);  break; // DOWN P4
+                    case UP:    player4.setVelY(-2.5); break; // UP P4
+                    case DOWN:  player4.setVelY(2.5);  break; // DOWN P4
                 }
             }
         });

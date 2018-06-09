@@ -28,6 +28,8 @@ public class Main extends Application {
     private Enemy2 enemy2;
     private Player3 player3;
     private Enemy3 enemy3;
+    private Player4 player4;
+
 
 
     // Repeated actions
@@ -168,9 +170,9 @@ public class Main extends Application {
             gc.drawImage(player3.getImage(), player3.getX(), player3.getY());
             player3.setHitbox();
 
+            // Moving and Jumping
             if (player3.getY() <= 450 - player3.getHeight() || player3.getVelY() != 0)
                 player3.moveY();
-
             if (player3.getY() <= 450 - player3.getHeight())
                 player3.changeVelY();
             else {
@@ -180,8 +182,27 @@ public class Main extends Application {
 
             // Draw Enemy 3 and create hitbox
             gc.drawImage(enemy3.getImage(), enemy3.getX(), enemy3.getY());
-            //enemy3.setHitbox();
+            enemy3.setHitbox();
 
+            // Move Enemy 3
+            enemy3.moveX();
+
+            // Re-place Enemy 3
+            if (enemy3.getX() <= 300)
+                enemy3.place();
+
+
+
+            /* ----------------------------------------
+               -----------------Game 4-----------------
+               ---------------------------------------- */
+
+
+            // Setting Background to light green
+            gc.setFill(Color.rgb(188, 226, 197, .5));
+            gc.fillRect(0, 300, 300, 300);
+
+            gc.drawImage(player4.getImage(), player4.getX(), player4.getY());
 
 
 
@@ -220,13 +241,14 @@ public class Main extends Application {
         // Setting Start variable to true
         start = true;
 
-        // Object creation
+        // Object Creation
         player1 = new Player1();
         enemy1 = new Enemy1();
         player2 = new Player2();
         enemy2 = new Enemy2();
         player3 = new Player3();
         enemy3 = new Enemy3();
+        player4 = new Player4();
 
         // Draw the ground for Game 3
         Line line = new Line(300, 450, 600, 450);
@@ -248,6 +270,9 @@ public class Main extends Application {
                     case RIGHT: player2.setVelX(2);  break; // RIGHT P2
                     // PLAYER 3
                     case SPACE: player3.jump();      break; // JUMP P3
+                    // PLAYER 4
+                    case UP:    player4.setVelY(-2); break; // UP P4
+                    case DOWN:  player4.setVelY(2);  break; // DOWN P4
                 }
             }
         });
@@ -264,7 +289,9 @@ public class Main extends Application {
                     // PLAYER 2
                     case LEFT:  player2.setVelX(0); break; // LEFT P2
                     case RIGHT: player2.setVelX(0); break; // RIGHT P2
-                    // PLAYER 3
+                    // PLAYER 4
+                    case UP:    player4.setVelY(0); break; // UP P4
+                    case DOWN:  player4.setVelY(0); break; // DOWN P4
                 }
             }
         });

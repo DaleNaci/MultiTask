@@ -15,8 +15,9 @@ public class Enemy3 {
         image = new Image("game3/enemy.png");
         width = image.getWidth();
         height = image.getHeight();
-        x = 450;
+        x = 580;
         y = 450 - height;
+        velx = -2;
     }
 
     // Getters & Setters
@@ -28,11 +29,14 @@ public class Enemy3 {
     public double getVelX() { return velx; }
     public void setVelX(double velx) { this.velx = velx; }
     public Rectangle2D getHitbox() { return hitbox; }
-    public void setHitbox(Rectangle2D hitbox) { this.hitbox = hitbox; }
+    public void setHitbox() { hitbox = new Rectangle2D(x, y, width, height); }
 
     // Other Functions
     public void moveX() {
         x += velx;
+    }
+    public void place() {
+        x = (int)(Math.random() * 500) + 600;
     }
 
 }

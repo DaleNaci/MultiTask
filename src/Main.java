@@ -216,6 +216,9 @@ public class Main extends Application {
             if (player4.getY() >= 600 - player4.getHeight())
                 player4.setY(600 - player4.getHeight());
 
+            // Draw Enemy 4 and create hitbox
+            gc.drawImage(enemy4.getImage(), enemy4.getX(), enemy4.getY());
+
 
 
 

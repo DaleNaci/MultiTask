@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,11 +19,13 @@ public class Main extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
     private AnimateObjects animate;
-    private double canvas_width;
-    private double canvas_height;
+    private double game_width;
+    private double game_height;
     private boolean start;
+    private Integer score;
+    private double framecount;
 
-    // Object Declaration
+    // Object Declaration For Game
     private Player1 player1;
     private Enemy1 enemy1;
     private Player2 player2;
@@ -31,6 +35,8 @@ public class Main extends Application {
     private Player4 player4;
     private Enemy4 enemy4;
 
+    // Miscellaneous Objects
+    private Text scoreboard;
 
 
     // Repeated actions
@@ -38,7 +44,7 @@ public class Main extends Application {
         public void handle(long now)
         {
             // Clear and set Graphics Context
-            gc.clearRect(0, 0, canvas_width, canvas_height);
+            gc.clearRect(0, 0, game_width, game_height);
             gc = canvas.getGraphicsContext2D();
 
 
@@ -86,12 +92,12 @@ public class Main extends Application {
             // Bounds
             if (player1.getX() < 0)                                          // Left Bounds
                 player1.setX(0);
-            if (player1.getX() > (canvas_width / 2) - player1.getWidth())    // Right Bounds
-                player1.setX((canvas_width / 2) - player1.getWidth());
+            if (player1.getX() > (game_width / 2) - player1.getWidth())    // Right Bounds
+                player1.setX((game_width / 2) - player1.getWidth());
             if (player1.getY() < 0)                                          // Upper Bounds
                 player1.setY(0);
-            if (player1.getY() > (canvas_height / 2) - player1.getHeight())  // Lower Bounds
-                player1.setY((canvas_height / 2) - player1.getHeight());
+            if (player1.getY() > (game_height / 2) - player1.getHeight())  // Lower Bounds
+                player1.setY((game_height / 2) - player1.getHeight());
 
             // Create Hitbox
             player1.setHitbox();
@@ -116,23 +122,23 @@ public class Main extends Application {
             player2.moveX();
 
             // Bounds for Player 2
-            if (player2.getX() < (canvas_width / 2))                    // Left Bounds
-                player2.setX(canvas_width / 2);
-            if (player2.getX() > (canvas_width - player2.getWidth()))   // Right Bounds
-                player2.setX(canvas_width - player2.getWidth());
+            if (player2.getX() < (game_width / 2))                    // Left Bounds
+                player2.setX(game_width / 2);
+            if (player2.getX() > (game_width - player2.getWidth()))   // Right Bounds
+                player2.setX(game_width - player2.getWidth());
 
             // Draw Enemy 2 and Create the Hitbox
             gc.drawImage(enemy2.getImage(), enemy2.getX(), enemy2.getY());
             enemy2.setHitbox();
 
             // Bounds for Enemy 2
-            if (enemy2.getX() < (canvas_width / 2))
+            if (enemy2.getX() < (game_width / 2))
                 enemy2.setVelX(enemy2.getVelX() * -1);
-            if (enemy2.getX() > (canvas_width - enemy2.getWidth()))
+            if (enemy2.getX() > (game_width - enemy2.getWidth()))
                 enemy2.setVelX(enemy2.getVelX() * -1);
             if (enemy2.getY() < 0)
                 enemy2.setVelY(enemy2.getVelY() * -1);
-            if (enemy2.getY() > ((canvas_height / 2) - enemy2.getHeight()))
+            if (enemy2.getY() > ((game_height / 2) - enemy2.getHeight()))
                 enemy2.setVelY(enemy2.getVelY() * -1);
 
             // Move
@@ -188,7 +194,7 @@ public class Main extends Application {
             // Move Enemy 3
             enemy3.moveX();
 
-            // Re-place Enemy 3
+            // Place Enemy 3
             if (enemy3.getX() <= 300)
                 enemy3.place();
 
@@ -234,7 +240,26 @@ public class Main extends Application {
                 enemy4.setHit(false);
             }
 
+            /* ----------------------------------------
+               -----------------Footer-----------------
+               ---------------------------------------- */
 
+            // Setting Background to light gray
+            gc.setFill(Color.rgb(230, 230, 230, .5));
+            gc.fillRect(0, 601, 600, 39);
+
+            // Black Line
+            gc.setFill(Color.BLACK);
+            gc.fillRect(0, 600, 600, 1);
+
+            // Keeping Score
+            framecount++;
+            if (framecount % 60 == 0)
+                score++;
+
+            scoreboard.setText(score.toString());
+            scoreboard.setX(10);
+            scoreboard.setY(629);
 
 
 
@@ -258,20 +283,23 @@ public class Main extends Application {
         // STANDARD CODE
         stage.setTitle("MultiTask");
         Group root = new Group();
-        canvas = new Canvas(600, 600);
+        canvas = new Canvas(600, 640);
         root.getChildren().add(canvas);
         Scene scene = new Scene(root);
         stage.setScene(scene);
 
         // Canvas Definitions
         gc = canvas.getGraphicsContext2D();
-        canvas_width = canvas.getWidth();
-        canvas_height = canvas.getHeight();
+        game_width = 600;
+        game_height = 600;
 
         // Setting Start variable to true
         start = true;
 
-        // Object Creation
+        // Setting Score to 0
+        score = 0;
+
+        // Object Creation for Game
         player1 = new Player1();
         enemy1 = new Enemy1();
         player2 = new Player2();
@@ -280,6 +308,15 @@ public class Main extends Application {
         enemy3 = new Enemy3();
         player4 = new Player4();
         enemy4 = new Enemy4();
+
+        // Object Creation for Score
+        scoreboard = new Text();
+
+        scoreboard.setText("Hello World");
+        scoreboard.setX(10);
+        scoreboard.setY(615);
+        scoreboard.setFont(new Font(24));
+        root.getChildren().add(scoreboard);
 
 
         // Draw the ground for Game 3

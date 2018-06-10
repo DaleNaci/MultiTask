@@ -37,7 +37,7 @@ public class Player3 {
     public double getWidth() { return width; }
     public double getHeight() { return height; }
     public Rectangle2D getHitbox() { return hitbox; }
-    public void setHitbox() { hitbox = new Rectangle2D(x, y, 41, 41); }
+    public void setHitbox() { hitbox = new Rectangle2D(x, y, width, height); }
     public boolean getCanJump() { return canJump; }
     public void setCanJump(boolean canJump) { this.canJump = canJump; }
 
@@ -52,6 +52,12 @@ public class Player3 {
         if (canJump)
             vely = -4;
         canJump = false;
+    }
+    public void reset() {
+        x = 350 - (width / 2);
+        y = 450 - height;
+        vely = 0;
+        canJump = true;
     }
 
 

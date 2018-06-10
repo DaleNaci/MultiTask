@@ -68,6 +68,13 @@ public class Enemy1 {
         countdown--;
         image = new Image("game1/" + countdown + ".png", 50, 50, true, true);
     }
+    public void reset() {
+        countdown = 6;
+        image = new Image("game1/" + 5 + ".png", 50, 50, true, true);
+        framecount = 0;
+        x = Math.random() * 301 - width;
+        y = Math.random() * 301 - height;
+    }
 
 
 

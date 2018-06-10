@@ -45,9 +45,18 @@ public class Enemy2 {
     public double getFramecount() { return framecount; }
     public void setFramecount(double framecount) { this.framecount = framecount; }
 
-    // Other Methods
+    // Move Methods
     public void moveX() { x += velx; }
     public void moveY() { y += vely; }
+
+    public void reset() {
+        x = 425;
+        y = 100;
+        vely = -3;
+        velx = (Math.random() < .5 ? 3 : -3);   // Picks randomly, either 3 or -3
+        hit = false;
+        framecount = 0;
+    }
 
 
 }

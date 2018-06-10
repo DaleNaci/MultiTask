@@ -31,12 +31,17 @@ public class Enemy3 {
     public Rectangle2D getHitbox() { return hitbox; }
     public void setHitbox() { hitbox = new Rectangle2D(x, y, width, height); }
 
-    // Other Functions
+    // Move Functions
     public void moveX() {
         x += velx;
     }
     public void place() {
         x = (int)(Math.random() * 500) + 600;
+    }
+
+    // Reset Function
+    public void reset() {
+        x = 580;
     }
 
 }

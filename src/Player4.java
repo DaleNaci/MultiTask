@@ -38,4 +38,10 @@ public class Player4 {
     // Other Functions
     public void moveY() { y += vely; }
 
+    // Reset Function
+    public void reset() {
+        y = 450 - (height / 2);
+        vely = 0;
+    }
+
 }

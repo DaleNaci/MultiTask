@@ -69,4 +69,10 @@ public class Player1 {
         y += vely;
     }
 
+    // Reset Method
+    public void reset() {
+        x = 125;
+        y = 125;
+    }
+
 }

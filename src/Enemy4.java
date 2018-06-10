@@ -40,11 +40,19 @@ public class Enemy4 {
     public boolean getHit() { return hit; }
     public void setHit(boolean hit) { this.hit = hit; }
 
-    // Other Functions
+    // Move Functions
     public void moveX() { x += velx; }
     public void place() {
         y = (int)(Math.random() * (301 - height)) + 300;
         x = 300 - width;
+    }
+
+    // Reset Function
+    public void reset() {
+        x = 250;
+        y = (int)(Math.random() * (301 - height)) + 300;
+        velx = -1.5;
+        hit = false;
     }
 
 }

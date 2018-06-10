@@ -2,8 +2,8 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -24,6 +24,7 @@ public class Main extends Application {
     private boolean start;
     private Integer score;
     private double framecount;
+    private boolean lose;
 
     // Object Declaration For Game
     private Player1 player1;
@@ -37,6 +38,7 @@ public class Main extends Application {
 
     // Miscellaneous Objects
     private Text scoreboard;
+    private Button restart;
 
 
     // Repeated actions
@@ -59,31 +61,38 @@ public class Main extends Application {
             // Creating Player 1
             gc.drawImage(player1.getImage(), player1.getX(), player1.getY());
 
-            // Changing position through a constant velocity
-            player1.moveX();
-            player1.moveY();
+            if (!lose) {
+                // Changing position through a constant velocity
+                player1.moveX();
+                player1.moveY();
 
-            // Changing Enemy position
-            if (start || player1.getHitbox().intersects(enemy1.getHitbox())) {
-                enemy1.setNew_x((Math.random()) * (301 - enemy1.getWidth()));
-                enemy1.setNew_y((Math.random()) * (301 - enemy1.getHeight()));
-                while (enemy1.getNew_x() > (player1.getX() - 10) && (enemy1.getNew_x() - 10) < player1.getX() + player1.getWidth()) {
+                // Changing Enemy position
+                if (start || player1.getHitbox().intersects(enemy1.getHitbox())) {
                     enemy1.setNew_x((Math.random()) * (301 - enemy1.getWidth()));
-                }
-                while (enemy1.getNew_y() > (player1.getY() - 10) && (enemy1.getNew_y() - 10) < player1.getY() + player1.getHeight()) {
                     enemy1.setNew_y((Math.random()) * (301 - enemy1.getHeight()));
+                    while (enemy1.getNew_x() > (player1.getX() - 10) && (enemy1.getNew_x() - 10) < player1.getX() + player1.getWidth()) {
+                        enemy1.setNew_x((Math.random()) * (301 - enemy1.getWidth()));
+                    }
+                    while (enemy1.getNew_y() > (player1.getY() - 10) && (enemy1.getNew_y() - 10) < player1.getY() + player1.getHeight()) {
+                        enemy1.setNew_y((Math.random()) * (301 - enemy1.getHeight()));
+                    }
+                    enemy1.setX(enemy1.getNew_x());
+                    enemy1.setY(enemy1.getNew_y());
+                    enemy1.setCountdown(6);
+                    enemy1.setFramecount(0);
                 }
-                enemy1.setX(enemy1.getNew_x());
-                enemy1.setY(enemy1.getNew_y());
-                enemy1.setCountdown(6);
-                enemy1.setFramecount(0);
-            }
 
-            // Change the image of Enemy every second
-            if (enemy1.getFramecount() % 60 == 0) {
-                enemy1.changeImage();
+                // Change the image of Enemy every second
+                if (enemy1.getFramecount() % 60 == 0) {
+                    try {
+                        enemy1.changeImage();
+                    } catch (IllegalArgumentException e) {
+                        lose = true;
+                        System.out.println("Game 1 Lost");
+                    }
+                }
+                enemy1.setFramecount(enemy1.getFramecount() + 1);
             }
-            enemy1.setFramecount(enemy1.getFramecount() + 1);
 
             // Draw Enemy and Create the Hitbox
             gc.drawImage(enemy1.getImage(), enemy1.getX(), enemy1.getY());
@@ -118,8 +127,10 @@ public class Main extends Application {
             gc.drawImage(player2.getImage(), player2.getX(), player2.getY());
             player2.setHitbox();
 
-            // Moving with a constant velocity
-            player2.moveX();
+            if (!lose) {
+                // Moving with a constant velocity
+                player2.moveX();
+            }
 
             // Bounds for Player 2
             if (player2.getX() < (game_width / 2))                    // Left Bounds
@@ -132,34 +143,41 @@ public class Main extends Application {
             enemy2.setHitbox();
 
             // Bounds for Enemy 2
-            if (enemy2.getX() < (game_width / 2))
+            if (enemy2.getX() < (game_width / 2))                  // Left Wall
                 enemy2.setVelX(enemy2.getVelX() * -1);
-            if (enemy2.getX() > (game_width - enemy2.getWidth()))
+            if (enemy2.getX() > (game_width - enemy2.getWidth()))  // Right Wall
                 enemy2.setVelX(enemy2.getVelX() * -1);
-            if (enemy2.getY() < 0)
-                enemy2.setVelY(enemy2.getVelY() * -1);
-            if (enemy2.getY() > ((game_height / 2) - enemy2.getHeight()))
+            if (enemy2.getY() < 0)                                 // Top Wall
                 enemy2.setVelY(enemy2.getVelY() * -1);
 
-            // Move
-            enemy2.moveX();
-            enemy2.moveY();
-
-            // Changes direction when hitting Player 2
-            if (player2.getHitbox().intersects(enemy2.getHitbox()) && !enemy2.getHit()) {
-                enemy2.setVelX((Math.random() * 3) + 1);
-                enemy2.setVelY(enemy2.getVelY() * -1);
-                enemy2.setHit(true);
+            // Game Over
+            if (enemy2.getY() > ((game_height / 2) - enemy2.getHeight())) {
+                lose = true;
+                System.out.println("Game 2 Lost");
             }
 
-            // Add one to framecount
-            if (enemy2.getHit())
-                enemy2.setFramecount(enemy2.getFramecount() + 1);
+            if (!lose) {
+                // Move
+                enemy2.moveX();
+                enemy2.moveY();
 
-            // Checking to reset framecount
-            if (enemy2.getFramecount() >= 20) {
-                enemy2.setHit(false);
-                enemy2.setFramecount(0);
+
+                // Changes direction when hitting Player 2
+                if (player2.getHitbox().intersects(enemy2.getHitbox()) && !enemy2.getHit()) {
+                    enemy2.setVelX((Math.random() * 3) + 1);
+                    enemy2.setVelY(enemy2.getVelY() * -1);
+                    enemy2.setHit(true);
+                }
+
+                // Add one to framecount
+                if (enemy2.getHit())
+                    enemy2.setFramecount(enemy2.getFramecount() + 1);
+
+                // Checking to reset framecount
+                if (enemy2.getFramecount() >= 20) {
+                    enemy2.setHit(false);
+                    enemy2.setFramecount(0);
+                }
             }
 
 
@@ -177,26 +195,36 @@ public class Main extends Application {
             gc.drawImage(player3.getImage(), player3.getX(), player3.getY());
             player3.setHitbox();
 
-            // Moving and Jumping
-            if (player3.getY() <= 450 - player3.getHeight() || player3.getVelY() != 0)
-                player3.moveY();
-            if (player3.getY() <= 450 - player3.getHeight())
-                player3.changeVelY();
-            else {
-                player3.setVelY(0);
-                player3.setCanJump(true);
+            if (!lose) {
+                // Moving and Jumping
+                if (player3.getY() <= 450 - player3.getHeight() || player3.getVelY() != 0)
+                    player3.moveY();
+                if (player3.getY() <= 450 - player3.getHeight())
+                    player3.changeVelY();
+                else {
+                    player3.setVelY(0);
+                    player3.setCanJump(true);
+                }
             }
 
             // Draw Enemy 3 and create hitbox
             gc.drawImage(enemy3.getImage(), enemy3.getX(), enemy3.getY());
             enemy3.setHitbox();
 
-            // Move Enemy 3
-            enemy3.moveX();
+            if (!lose) {
+                // Move Enemy 3
+                enemy3.moveX();
 
-            // Place Enemy 3
-            if (enemy3.getX() <= 300)
-                enemy3.place();
+                // Place Enemy 3
+                if (enemy3.getX() <= 300)
+                    enemy3.place();
+            }
+
+            // Game Over Code
+            if (player3.getHitbox().intersects(enemy3.getHitbox())) {
+                lose = true;
+                System.out.println("Game 3 lost");
+            }
 
 
 
@@ -213,8 +241,10 @@ public class Main extends Application {
             gc.drawImage(player4.getImage(), player4.getX(), player4.getY());
             player4.setHitbox();
 
-            // Move Player 4
-            player4.moveY();
+            if (!lose) {
+                // Move Player 4
+                player4.moveY();
+            }
 
             // Bounds
             if (player4.getY() <= 300)
@@ -227,17 +257,25 @@ public class Main extends Application {
                 gc.drawImage(enemy4.getImage(), enemy4.getX(), enemy4.getY());
             enemy4.setHitbox();
 
-            // Move Enemy 4
-            enemy4.moveX();
+            if (!lose) {
+                // Move Enemy 4
+                enemy4.moveX();
 
-            // Change Hit to true if Enemy 4 is hit
-            if (player4.getHitbox().intersects(enemy4.getHitbox()))
-                enemy4.setHit(true);
+                // Change Hit to true if Enemy 4 is hit
+                if (player4.getHitbox().intersects(enemy4.getHitbox()))
+                    enemy4.setHit(true);
 
-            // After a while, bring Enemy 4 back
-            if (enemy4.getX() <= -1 *(Math.random() * 500 + 200)) {
-                enemy4.place();
-                enemy4.setHit(false);
+                // After a while, bring Enemy 4 back
+                if (enemy4.getX() <= -1 * (Math.random() * 500 + 200)) {
+                    enemy4.place();
+                    enemy4.setHit(false);
+                }
+            }
+
+            // Game Over Code
+            if (enemy4.getX() <= 0 && !enemy4.getHit()) {
+                lose = true;
+                System.out.println("Game 4 Lost");
             }
 
             /* ----------------------------------------
@@ -252,15 +290,16 @@ public class Main extends Application {
             gc.setFill(Color.BLACK);
             gc.fillRect(0, 600, 600, 1);
 
-            // Keeping Score
-            framecount++;
-            if (framecount % 60 == 0)
-                score++;
+            if (!lose) {
+                // Keeping Score
+                framecount++;
+                if (framecount % 60 == 0)
+                    score++;
 
-            scoreboard.setText(score.toString());
-            scoreboard.setX(10);
-            scoreboard.setY(629);
-
+                scoreboard.setText(score.toString());
+                scoreboard.setX(10);
+                scoreboard.setY(629);
+            }
 
 
             /* ---------------------------------------
@@ -299,6 +338,9 @@ public class Main extends Application {
         // Setting Score to 0
         score = 0;
 
+        // Setting Lose variable to false
+        lose = false;
+
         // Object Creation for Game
         player1 = new Player1();
         enemy1 = new Enemy1();
@@ -325,23 +367,25 @@ public class Main extends Application {
         line.setStrokeWidth(4);
         root.getChildren().addAll(line);
 
+
         // Checks for Key Presses
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
                 switch ((event).getCode()) {
                     // PLAYER 1
-                    case W:     player1.setVelY(-2); break; // UP P1
-                    case A:     player1.setVelX(-2); break; // LEFT P1
-                    case S:     player1.setVelY(2);  break; // DOWN P1
-                    case D:     player1.setVelX(2);  break; // RIGHT P1
+                    case W:     player1.setVelY(-2);   break; // UP P1
+                    case A:     player1.setVelX(-2);   break; // LEFT P1
+                    case S:     player1.setVelY(2);    break; // DOWN P1
+                    case D:     player1.setVelX(2);    break; // RIGHT P1
                     // PLAYER 2
-                    case LEFT:  player2.setVelX(-2); break; // LEFT P2
-                    case RIGHT: player2.setVelX(2);  break; // RIGHT P2
+                    case LEFT:  player2.setVelX(-2);   break; // LEFT P2
+                    case RIGHT: player2.setVelX(2);    break; // RIGHT P2
                     // PLAYER 3
-                    case SPACE: player3.jump();      break; // JUMP P3
+                    case SPACE: player3.jump();        break; // JUMP P3
                     // PLAYER 4
                     case UP:    player4.setVelY(-2.5); break; // UP P4
                     case DOWN:  player4.setVelY(2.5);  break; // DOWN P4
+                    case R:     restart();             break; // RESTART
                 }
             }
         });
@@ -371,5 +415,18 @@ public class Main extends Application {
         stage.show();
     }
 
+    public void restart() {
+        player1.reset();
+        enemy1.reset();
+        player2.reset();
+        enemy2.reset();
+        player3.reset();
+        enemy3.reset();
+        player4.reset();
+        enemy4.reset();
+        score = 0;
+        framecount = 0;
+        lose = false;
+    }
 
 }

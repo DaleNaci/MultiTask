@@ -2,10 +2,8 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -34,6 +32,8 @@ public class Main extends Application {
     private ImageView iv2;
     private ImageView iv3;
     private ImageView iv4;
+    private double checkpoint;
+    private double level;
 
     // Object Declaration For Game
     private Player1 player1;
@@ -47,7 +47,6 @@ public class Main extends Application {
 
     // Miscellaneous Objects
     private Text scoreboard;
-    private Button restart;
 
 
     // Repeated actions
@@ -138,7 +137,7 @@ public class Main extends Application {
             gc.drawImage(player2.getImage(), player2.getX(), player2.getY());
             player2.setHitbox();
 
-            if (!lose) {
+            if (!lose && level >= 2) {
                 // Moving with a constant velocity
                 player2.moveX();
             }
@@ -169,7 +168,7 @@ public class Main extends Application {
                 iv.setVisible(true);
             }
 
-            if (!lose) {
+            if (!lose && level >= 2) {
                 // Move
                 enemy2.moveX();
                 enemy2.moveY();
@@ -193,6 +192,17 @@ public class Main extends Application {
                 }
             }
 
+            if (framecount >= checkpoint && level == 1) {
+                checkpoint = 1200;
+                level = 2;
+            }
+
+            if (level < 2) {
+                iv2.setOpacity(.7);
+            } else {
+                iv2.setVisible(false);
+            }
+
 
 
             /* ----------------------------------------
@@ -208,7 +218,7 @@ public class Main extends Application {
             gc.drawImage(player3.getImage(), player3.getX(), player3.getY());
             player3.setHitbox();
 
-            if (!lose) {
+            if (!lose && level >= 3) {
                 // Moving and Jumping
                 if (player3.getY() <= 450 - player3.getHeight() || player3.getVelY() != 0)
                     player3.moveY();
@@ -224,7 +234,7 @@ public class Main extends Application {
             gc.drawImage(enemy3.getImage(), enemy3.getX(), enemy3.getY());
             enemy3.setHitbox();
 
-            if (!lose) {
+            if (!lose && level >= 3) {
                 // Move Enemy 3
                 enemy3.moveX();
 
@@ -239,6 +249,18 @@ public class Main extends Application {
                 iv.setX(450 - (cross.getWidth() / 2));
                 iv.setY(450 - (cross.getHeight() / 2));
                 iv.setVisible(true);
+            }
+
+            if (framecount >= checkpoint && level == 2) {
+                checkpoint = 1800;
+                level = 3;
+            }
+
+
+            if (level < 3) {
+                iv3.setOpacity(.7);
+            } else {
+                iv3.setVisible(false);
             }
 
 
@@ -256,7 +278,7 @@ public class Main extends Application {
             gc.drawImage(player4.getImage(), player4.getX(), player4.getY());
             player4.setHitbox();
 
-            if (!lose) {
+            if (!lose && level >= 4) {
                 // Move Player 4
                 player4.moveY();
             }
@@ -272,7 +294,7 @@ public class Main extends Application {
                 gc.drawImage(enemy4.getImage(), enemy4.getX(), enemy4.getY());
             enemy4.setHitbox();
 
-            if (!lose) {
+            if (!lose && level >= 4) {
                 // Move Enemy 4
                 enemy4.moveX();
 
@@ -295,6 +317,19 @@ public class Main extends Application {
                 iv.setVisible(true);
             }
 
+            if (framecount >= checkpoint && level == 3) {
+                checkpoint = 2400;
+                level = 4;
+            }
+
+
+            if (level < 4) {
+                iv4.setOpacity(.7);
+            } else {
+                iv4.setVisible(false);
+            }
+
+
             /* ----------------------------------------
                -----------------Footer-----------------
                ---------------------------------------- */
@@ -308,16 +343,20 @@ public class Main extends Application {
             gc.fillRect(0, 600, 600, 1);
 
             if (!lose) {
+
                 // Keeping Score
                 framecount++;
-                if (framecount % 60 == 0)
+                if (framecount % 60 == 0) {
                     score++;
+                }
 
                 scoreboard.setText(score.toString());
                 scoreboard.setX(10);
                 scoreboard.setY(629);
             }
 
+            if (!lose)
+                iv.setVisible(false);
 
 
             /* ---------------------------------------
@@ -382,7 +421,7 @@ public class Main extends Application {
 
 
         // Draw the ground for Game 3
-        Line line = new Line(300, 450, 600, 450);
+        Line line = new Line(300, 450, 598, 450);
         line.setStroke(Color.BLACK);
         line.setStrokeWidth(4);
         root.getChildren().addAll(line);
@@ -394,10 +433,31 @@ public class Main extends Application {
         iv.setVisible(false);
         root.getChildren().add(iv);
 
+        // Black Screens
         black = new Image("Misc/black.png");
         iv2 = new ImageView();
         iv2.setImage(black);
+        iv2.setX(300);
+        iv2.setY(0);
+        iv3 = new ImageView();
+        iv3.setImage(black);
+        iv3.setX(300);
+        iv3.setY(300);
+        iv4 = new ImageView();
+        iv4.setImage(black);
+        iv4.setX(0);
+        iv4.setY(300);
+        root.getChildren().add(iv2);
+        root.getChildren().add(iv3);
+        root.getChildren().add(iv4);
 
+
+
+        // Setting the Frame checkpoint per level
+        checkpoint = 600;
+
+        // Start on Level One
+        level = 1;
 
 
         // Checks for Key Presses
@@ -448,6 +508,7 @@ public class Main extends Application {
         stage.show();
     }
 
+    // Restart Function
     public void restart() {
         player1.reset();
         enemy1.reset();
@@ -460,6 +521,11 @@ public class Main extends Application {
         score = 0;
         framecount = 0;
         lose = false;
+        level = 1;
+        checkpoint = 600;
+        iv2.setVisible(true);
+        iv3.setVisible(true);
+        iv4.setVisible(true);
     }
 
 }

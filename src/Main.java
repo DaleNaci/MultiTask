@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -13,6 +14,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.*;
 import javafx.scene.input.*;
+
+import java.net.URL;
 
 public class Main extends Application {
 
@@ -44,6 +47,10 @@ public class Main extends Application {
     private Enemy3 enemy3;
     private Player4 player4;
     private Enemy4 enemy4;
+
+    // Sound Objects
+    URL pong1;
+    AudioClip pong1_clip;
 
     // Miscellaneous Objects
     private Text scoreboard;
@@ -178,6 +185,7 @@ public class Main extends Application {
                 if (player2.getHitbox().intersects(enemy2.getHitbox()) && !enemy2.getHit()) {
                     enemy2.setVelX((Math.random() * 3) + 1);
                     enemy2.setVelY(enemy2.getVelY() * -1);
+                    pong1_clip.play();
                     enemy2.setHit(true);
                 }
 
@@ -451,6 +459,9 @@ public class Main extends Application {
         root.getChildren().add(iv3);
         root.getChildren().add(iv4);
 
+        // Sound
+        pong1 = getClass().getResource("game2/pong1.wav");
+        pong1_clip = new AudioClip(pong1.toString());
 
 
         // Setting the Frame checkpoint per level
@@ -523,6 +534,7 @@ public class Main extends Application {
         lose = false;
         level = 1;
         checkpoint = 600;
+        start = true;
         iv2.setVisible(true);
         iv3.setVisible(true);
         iv4.setVisible(true);

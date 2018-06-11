@@ -29,6 +29,7 @@ public class Main extends Application {
     private double framecount;
     private boolean lose;
     private Image cross;
+    private ImageView iv;
 
     // Object Declaration For Game
     private Player1 player1;
@@ -92,6 +93,9 @@ public class Main extends Application {
                         enemy1.changeImage();
                     } catch (IllegalArgumentException e) {
                         lose = true;
+                        iv.setX(150 - (cross.getWidth() / 2));
+                        iv.setY(150 - (cross.getHeight() / 2));
+                        iv.setVisible(true);
                     }
                 }
                 enemy1.setFramecount(enemy1.getFramecount() + 1);
@@ -156,6 +160,9 @@ public class Main extends Application {
             // Game Over
             if (enemy2.getY() > ((game_height / 2) - enemy2.getHeight())) {
                 lose = true;
+                iv.setX(450 - (cross.getWidth() / 2));
+                iv.setY(150 - (cross.getHeight() / 2));
+                iv.setVisible(true);
             }
 
             if (!lose) {
@@ -225,6 +232,9 @@ public class Main extends Application {
             // Game Over Code
             if (player3.getHitbox().intersects(enemy3.getHitbox())) {
                 lose = true;
+                iv.setX(450 - (cross.getWidth() / 2));
+                iv.setY(450 - (cross.getHeight() / 2));
+                iv.setVisible(true);
             }
 
 
@@ -276,6 +286,9 @@ public class Main extends Application {
             // Game Over Code
             if (enemy4.getX() <= 0 && !enemy4.getHit()) {
                 lose = true;
+                iv.setX(150 - (cross.getWidth() / 2));
+                iv.setY(450 - (cross.getHeight() / 2));
+                iv.setVisible(true);
             }
 
             /* ----------------------------------------
@@ -302,6 +315,7 @@ public class Main extends Application {
             }
 
 
+
             /* ---------------------------------------
                -------------Miscellaneous-------------
                --------------------------------------- */
@@ -309,9 +323,6 @@ public class Main extends Application {
             // Setting "start" variable to false
             start = false;
 
-            if (lose) {
-
-            }
         }
     }
 
@@ -373,12 +384,12 @@ public class Main extends Application {
         root.getChildren().addAll(line);
 
         // Setting Up the Cross Image
-        Image cross = new Image("Misc/cross.png");
-
-        ImageView iv = new ImageView();
+        cross = new Image("Misc/cross.png");
+        iv = new ImageView();
         iv.setImage(cross);
-        iv.setX(150 - (cross.getWidth() / 2));
-        iv.setY(150 - (cross.getHeight() / 2));
+//        iv.setX(150 - (cross.getWidth() / 2));
+//        iv.setY(150 - (cross.getHeight() / 2));
+        iv.setVisible(false);
         root.getChildren().add(iv);
 
 
@@ -399,6 +410,7 @@ public class Main extends Application {
                     // PLAYER 4
                     case UP:    player4.setVelY(-2.5); break; // UP P4
                     case DOWN:  player4.setVelY(2.5);  break; // DOWN P4
+                    // MISCELLANEOUS
                     case R:     restart();             break; // RESTART
                 }
             }

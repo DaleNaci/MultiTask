@@ -30,6 +30,10 @@ public class Main extends Application {
     private boolean lose;
     private Image cross;
     private ImageView iv;
+    private Image black;
+    private ImageView iv2;
+    private ImageView iv3;
+    private ImageView iv4;
 
     // Object Declaration For Game
     private Player1 player1;
@@ -387,10 +391,13 @@ public class Main extends Application {
         cross = new Image("Misc/cross.png");
         iv = new ImageView();
         iv.setImage(cross);
-//        iv.setX(150 - (cross.getWidth() / 2));
-//        iv.setY(150 - (cross.getHeight() / 2));
         iv.setVisible(false);
         root.getChildren().add(iv);
+
+        black = new Image("Misc/black.png");
+        iv2 = new ImageView();
+        iv2.setImage(black);
+
 
 
         // Checks for Key Presses

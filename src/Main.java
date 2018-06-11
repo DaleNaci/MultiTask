@@ -3,6 +3,9 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -25,6 +28,7 @@ public class Main extends Application {
     private Integer score;
     private double framecount;
     private boolean lose;
+    private Image cross;
 
     // Object Declaration For Game
     private Player1 player1;
@@ -304,6 +308,10 @@ public class Main extends Application {
 
             // Setting "start" variable to false
             start = false;
+
+            if (lose) {
+
+            }
         }
     }
 
@@ -350,7 +358,8 @@ public class Main extends Application {
         // Object Creation for Score
         scoreboard = new Text();
 
-        scoreboard.setText("Hello World");
+        // Creating and Placing Scoreboard
+        scoreboard.setText("0");
         scoreboard.setX(10);
         scoreboard.setY(615);
         scoreboard.setFont(new Font(24));
@@ -362,6 +371,15 @@ public class Main extends Application {
         line.setStroke(Color.BLACK);
         line.setStrokeWidth(4);
         root.getChildren().addAll(line);
+
+        // Setting Up the Cross Image
+        Image cross = new Image("Misc/cross.png");
+
+        ImageView iv = new ImageView();
+        iv.setImage(cross);
+        iv.setX(150 - (cross.getWidth() / 2));
+        iv.setY(150 - (cross.getHeight() / 2));
+        root.getChildren().add(iv);
 
 
         // Checks for Key Presses

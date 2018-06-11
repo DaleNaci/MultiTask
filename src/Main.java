@@ -88,7 +88,6 @@ public class Main extends Application {
                         enemy1.changeImage();
                     } catch (IllegalArgumentException e) {
                         lose = true;
-                        System.out.println("Game 1 Lost");
                     }
                 }
                 enemy1.setFramecount(enemy1.getFramecount() + 1);
@@ -153,7 +152,6 @@ public class Main extends Application {
             // Game Over
             if (enemy2.getY() > ((game_height / 2) - enemy2.getHeight())) {
                 lose = true;
-                System.out.println("Game 2 Lost");
             }
 
             if (!lose) {
@@ -223,7 +221,6 @@ public class Main extends Application {
             // Game Over Code
             if (player3.getHitbox().intersects(enemy3.getHitbox())) {
                 lose = true;
-                System.out.println("Game 3 lost");
             }
 
 
@@ -275,7 +272,6 @@ public class Main extends Application {
             // Game Over Code
             if (enemy4.getX() <= 0 && !enemy4.getHit()) {
                 lose = true;
-                System.out.println("Game 4 Lost");
             }
 
             /* ----------------------------------------

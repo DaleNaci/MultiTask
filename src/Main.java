@@ -37,6 +37,7 @@ public class Main extends Application {
     private ImageView iv4;
     private double checkpoint;
     private double level;
+    private boolean alreadyLost;
 
     // Object Declaration For Game
     private Player1 player1;
@@ -53,6 +54,8 @@ public class Main extends Application {
     AudioClip pong_clip;
     URL coin;
     AudioClip coin_clip;
+    URL lose_sound;
+    AudioClip lose_sound_clip;
 
     // Miscellaneous Objects
     private Text scoreboard;
@@ -104,10 +107,7 @@ public class Main extends Application {
                     try {
                         enemy1.changeImage();
                     } catch (IllegalArgumentException e) {
-                        lose = true;
-                        iv.setX(150 - (cross.getWidth() / 2));
-                        iv.setY(150 - (cross.getHeight() / 2));
-                        iv.setVisible(true);
+                        gameOver(150, 150);
                     }
                 }
                 enemy1.setFramecount(enemy1.getFramecount() + 1);
@@ -170,12 +170,8 @@ public class Main extends Application {
                 enemy2.setVelY(enemy2.getVelY() * -1);
 
             // Game Over
-            if (enemy2.getY() > ((game_height / 2) - enemy2.getHeight())) {
-                lose = true;
-                iv.setX(450 - (cross.getWidth() / 2));
-                iv.setY(150 - (cross.getHeight() / 2));
-                iv.setVisible(true);
-            }
+            if (enemy2.getY() > ((game_height / 2) - enemy2.getHeight()))
+                gameOver(450, 150);
 
             if (!lose && level >= 2) {
                 // Move
@@ -254,12 +250,8 @@ public class Main extends Application {
             }
 
             // Game Over Code
-            if (player3.getHitbox().intersects(enemy3.getHitbox())) {
-                lose = true;
-                iv.setX(450 - (cross.getWidth() / 2));
-                iv.setY(450 - (cross.getHeight() / 2));
-                iv.setVisible(true);
-            }
+            if (player3.getHitbox().intersects(enemy3.getHitbox()))
+                gameOver(450, 450);
 
             if (framecount >= checkpoint && level == 2) {
                 checkpoint = 1800;
@@ -323,12 +315,9 @@ public class Main extends Application {
             }
 
             // Game Over Code
-            if (enemy4.getX() <= 0 && !enemy4.getHit()) {
-                lose = true;
-                iv.setX(150 - (cross.getWidth() / 2));
-                iv.setY(450 - (cross.getHeight() / 2));
-                iv.setVisible(true);
-            }
+            if (enemy4.getX() <= 0 && !enemy4.getHit())
+                gameOver(150, 450);
+
 
             if (framecount >= checkpoint && level == 3) {
                 checkpoint = 2400;
@@ -412,6 +401,9 @@ public class Main extends Application {
         // Setting Lose variable to false
         lose = false;
 
+        // Setting Already Lost variable to false
+        alreadyLost = false;
+
         // Object Creation for Game
         player1 = new Player1();
         enemy1 = new Enemy1();
@@ -469,6 +461,8 @@ public class Main extends Application {
         pong_clip = new AudioClip(pong.toString());
         coin = getClass().getResource("game4/coin.wav");
         coin_clip = new AudioClip(coin.toString());
+        lose_sound = getClass().getResource("Misc/lose.wav");
+        lose_sound_clip = new AudioClip(lose_sound.toString());
 
 
         // Setting the Frame checkpoint per level
@@ -526,6 +520,17 @@ public class Main extends Application {
         stage.show();
     }
 
+    public void gameOver(double x, double y) {
+        lose = true;
+        iv.setX(x - (cross.getWidth() / 2));
+        iv.setY(y - (cross.getHeight() / 2));
+        iv.setVisible(true);
+        if (!alreadyLost)
+            lose_sound_clip.play();
+        alreadyLost = true;
+    }
+
+
     // Restart Function
     public void restart() {
         player1.reset();
@@ -545,6 +550,7 @@ public class Main extends Application {
         iv2.setVisible(true);
         iv3.setVisible(true);
         iv4.setVisible(true);
+        alreadyLost = false;
     }
 
 }

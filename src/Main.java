@@ -56,6 +56,10 @@ public class Main extends Application {
     AudioClip coin_clip;
     URL lose_sound;
     AudioClip lose_sound_clip;
+    URL jump;
+    AudioClip jump_clip;
+    URL background;
+    AudioClip background_clip;
 
     // Miscellaneous Objects
     private Text scoreboard;
@@ -183,7 +187,7 @@ public class Main extends Application {
                 if (player2.getHitbox().intersects(enemy2.getHitbox()) && !enemy2.getHit()) {
                     enemy2.setVelX((Math.random() * 3) + 1);
                     enemy2.setVelY(enemy2.getVelY() * -1);
-                    pong_clip.play();
+                    pong_clip.play(.3);
                     enemy2.setHit(true);
                 }
 
@@ -225,11 +229,16 @@ public class Main extends Application {
             player3.setHitbox();
 
             if (!lose && level >= 3) {
+                // Playing Sound
+                if (player3.getVelY() == -4)
+                    jump_clip.play();
+
                 // Moving and Jumping
                 if (player3.getY() <= 450 - player3.getHeight() || player3.getVelY() != 0)
                     player3.moveY();
-                if (player3.getY() <= 450 - player3.getHeight())
+                if (player3.getY() <= 450 - player3.getHeight()) {
                     player3.changeVelY();
+                }
                 else {
                     player3.setVelY(0);
                     player3.setCanJump(true);
@@ -368,6 +377,9 @@ public class Main extends Application {
             // Setting "start" variable to false
             start = false;
 
+            // Game Music
+
+
         }
     }
 
@@ -463,6 +475,10 @@ public class Main extends Application {
         coin_clip = new AudioClip(coin.toString());
         lose_sound = getClass().getResource("Misc/lose.wav");
         lose_sound_clip = new AudioClip(lose_sound.toString());
+        jump = getClass().getResource("game3/jump.wav");
+        jump_clip = new AudioClip(jump.toString());
+        background = getClass().getResource("Misc/background.mp3");
+        background_clip = new AudioClip(background.toString());
 
 
         // Setting the Frame checkpoint per level

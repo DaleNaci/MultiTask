@@ -49,8 +49,10 @@ public class Main extends Application {
     private Enemy4 enemy4;
 
     // Sound Objects
-    URL pong1;
-    AudioClip pong1_clip;
+    URL pong;
+    AudioClip pong_clip;
+    URL coin;
+    AudioClip coin_clip;
 
     // Miscellaneous Objects
     private Text scoreboard;
@@ -185,7 +187,7 @@ public class Main extends Application {
                 if (player2.getHitbox().intersects(enemy2.getHitbox()) && !enemy2.getHit()) {
                     enemy2.setVelX((Math.random() * 3) + 1);
                     enemy2.setVelY(enemy2.getVelY() * -1);
-                    pong1_clip.play();
+                    pong_clip.play();
                     enemy2.setHit(true);
                 }
 
@@ -307,8 +309,11 @@ public class Main extends Application {
                 enemy4.moveX();
 
                 // Change Hit to true if Enemy 4 is hit
-                if (player4.getHitbox().intersects(enemy4.getHitbox()))
+                if (player4.getHitbox().intersects(enemy4.getHitbox())) {
+                    if (!enemy4.getHit())
+                        coin_clip.play();
                     enemy4.setHit(true);
+                }
 
                 // After a while, bring Enemy 4 back
                 if (enemy4.getX() <= -1 * (Math.random() * 500 + 200)) {
@@ -460,8 +465,10 @@ public class Main extends Application {
         root.getChildren().add(iv4);
 
         // Sound
-        pong1 = getClass().getResource("game2/pong1.wav");
-        pong1_clip = new AudioClip(pong1.toString());
+        pong = getClass().getResource("game2/pong.wav");
+        pong_clip = new AudioClip(pong.toString());
+        coin = getClass().getResource("game4/coin.wav");
+        coin_clip = new AudioClip(coin.toString());
 
 
         // Setting the Frame checkpoint per level

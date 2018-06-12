@@ -374,10 +374,16 @@ public class Main extends Application {
                -------------Miscellaneous-------------
                --------------------------------------- */
 
+            // Game Music
+            if (start)
+                background_clip.play();
+            if (lose)
+                background_clip.stop();
+
             // Setting "start" variable to false
             start = false;
 
-            // Game Music
+
 
 
         }
@@ -477,8 +483,9 @@ public class Main extends Application {
         lose_sound_clip = new AudioClip(lose_sound.toString());
         jump = getClass().getResource("game3/jump.wav");
         jump_clip = new AudioClip(jump.toString());
-        background = getClass().getResource("Misc/background.mp3");
+        background = getClass().getResource("Misc/background.wav");
         background_clip = new AudioClip(background.toString());
+        background_clip.setVolume(.15);
 
 
         // Setting the Frame checkpoint per level

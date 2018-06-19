@@ -327,12 +327,10 @@ public class Main extends Application {
             if (enemy4.getX() <= 0 && !enemy4.getHit())
                 gameOver(150, 450);
 
-
             if (framecount >= checkpoint && level == 3) {
                 checkpoint = 2400;
                 level = 4;
             }
-
 
             if (level < 4) {
                 iv4.setOpacity(.7);
@@ -382,9 +380,6 @@ public class Main extends Application {
 
             // Setting "start" variable to false
             start = false;
-
-
-
 
         }
     }
@@ -487,7 +482,6 @@ public class Main extends Application {
         background_clip = new AudioClip(background.toString());
         background_clip.setVolume(.15);
 
-
         // Setting the Frame checkpoint per level
         checkpoint = 600;
 
@@ -537,12 +531,14 @@ public class Main extends Application {
             }
         });
 
+
         // STANDARD CODE
         animate = new AnimateObjects();
         animate.start();
         stage.show();
     }
 
+    // Game Over Function
     public void gameOver(double x, double y) {
         lose = true;
         iv.setX(x - (cross.getWidth() / 2));

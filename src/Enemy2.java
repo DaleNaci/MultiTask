@@ -13,6 +13,7 @@ public class Enemy2 {
     private Rectangle2D hitbox; // Hitbox
     private boolean hit;        // Hit Delay
     private double framecount;  // Frame Count
+    private double multiplier;
 
     public Enemy2() {
         image = new Image("game2/enemy.png");
@@ -24,6 +25,8 @@ public class Enemy2 {
         height = image.getHeight();
         hit = false;
         framecount = 0;
+        multiplier = 1;
+
     }
 
     // Getters & Setters
@@ -44,11 +47,14 @@ public class Enemy2 {
     public void setHit(boolean hit) { this.hit = hit; }
     public double getFramecount() { return framecount; }
     public void setFramecount(double framecount) { this.framecount = framecount; }
+    public double getMultiplier() { return multiplier; }
+    public void setMultiplier(double multiplier) { this.multiplier = multiplier; }
 
     // Move Methods
     public void moveX() { x += velx; }
-    public void moveY() { y += vely; }
+    public void moveY() { y += (vely * multiplier); }
 
+    // Reset Method
     public void reset() {
         x = 425;
         y = 100;

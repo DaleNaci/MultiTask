@@ -73,6 +73,23 @@ public class Main extends Application {
             gc.clearRect(0, 0, game_width, game_height);
             gc = canvas.getGraphicsContext2D();
 
+            // Leveling
+            if (framecount >= checkpoint && level == 1) {
+                checkpoint = 1200;
+                level = 2;
+            }
+            if (framecount >= checkpoint && level == 2) {
+                checkpoint = 1800;
+                level = 3;
+            }
+            if (framecount >= checkpoint && level == 3) {
+                checkpoint = 2400;
+                level = 4;
+            }
+            if (framecount >= checkpoint && level == 4) {
+                checkpoint = 3000;
+                level = 5;
+            }
 
             /* ----------------------------------------
                -----------------Game 1-----------------
@@ -133,7 +150,6 @@ public class Main extends Application {
 
             // Create Hitbox
             player1.setHitbox();
-
 
 
             /* ----------------------------------------
@@ -202,18 +218,16 @@ public class Main extends Application {
                 }
             }
 
-            if (framecount >= checkpoint && level == 1) {
-                checkpoint = 1200;
-                level = 2;
-            }
-
             if (level < 2) {
                 iv2.setOpacity(.7);
             } else {
                 iv2.setVisible(false);
             }
 
-
+            // Increasing Difficulty
+            if (level > 4) {
+                enemy2.setMultiplier(1.2);
+            }
 
             /* ----------------------------------------
                -----------------Game 3-----------------
@@ -261,11 +275,6 @@ public class Main extends Application {
             // Game Over Code
             if (player3.getHitbox().intersects(enemy3.getHitbox()))
                 gameOver(450, 450);
-
-            if (framecount >= checkpoint && level == 2) {
-                checkpoint = 1800;
-                level = 3;
-            }
 
 
             if (level < 3) {
@@ -327,11 +336,6 @@ public class Main extends Application {
             if (enemy4.getX() <= 0 && !enemy4.getHit())
                 gameOver(150, 450);
 
-            if (framecount >= checkpoint && level == 3) {
-                checkpoint = 2400;
-                level = 4;
-            }
-
             if (level < 4) {
                 iv4.setOpacity(.7);
             } else {
@@ -352,13 +356,11 @@ public class Main extends Application {
             gc.fillRect(0, 600, 600, 1);
 
             if (!lose) {
-
                 // Keeping Score
                 framecount++;
                 if (framecount % 60 == 0) {
                     score++;
                 }
-
                 scoreboard.setText(score.toString());
                 scoreboard.setX(10);
                 scoreboard.setY(629);
@@ -548,7 +550,6 @@ public class Main extends Application {
             lose_sound_clip.play();
         alreadyLost = true;
     }
-
 
     // Restart Function
     public void restart() {

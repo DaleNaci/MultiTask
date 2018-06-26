@@ -10,6 +10,7 @@ public class Enemy3 {
     private double width;       // Width
     private double height;      // Height
     private Rectangle2D hitbox; // Hitbox
+    private double multiplier;  // X Multiplier
 
     public Enemy3() {
         image = new Image("game3/enemy.png");
@@ -18,6 +19,7 @@ public class Enemy3 {
         x = 580;
         y = 450 - height;
         velx = -2;
+        multiplier = 1;
     }
 
     // Getters & Setters
@@ -30,10 +32,12 @@ public class Enemy3 {
     public void setVelX(double velx) { this.velx = velx; }
     public Rectangle2D getHitbox() { return hitbox; }
     public void setHitbox() { hitbox = new Rectangle2D(x, y, width, height); }
+    public double getMultiplier() { return multiplier; }
+    public void setMultiplier(double multiplier) { this.multiplier = multiplier; }
 
     // Move Functions
     public void moveX() {
-        x += velx;
+        x += (velx * multiplier);
     }
     public void place() {
         x = (int)(Math.random() * 500) + 600;

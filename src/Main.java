@@ -283,6 +283,9 @@ public class Main extends Application {
                 iv3.setVisible(false);
             }
 
+            if (level == 5) {
+                enemy3.setMultiplier(1.2);
+            }
 
 
             /* ----------------------------------------

@@ -12,6 +12,7 @@ public class Enemy4 {
     private Rectangle2D hitbox;
     private double framecount;
     private boolean hit;
+    private double multiplier;
 
     public Enemy4() {
         image = new Image("game4/enemy.png");
@@ -21,6 +22,7 @@ public class Enemy4 {
         y = (int)(Math.random() * (301 - height)) + 300;
         velx = -1.5;
         hit = false;
+        multiplier = 1;
     }
 
     // Getters & Setters
@@ -39,9 +41,11 @@ public class Enemy4 {
     public void setHitbox() { hitbox = new Rectangle2D(x, y, width, height); }
     public boolean getHit() { return hit; }
     public void setHit(boolean hit) { this.hit = hit; }
+    public double getMultiplier() { return multiplier; }
+    public void setMultiplier(double multiplier) { this.multiplier = multiplier; }
 
     // Move Functions
-    public void moveX() { x += velx; }
+    public void moveX() { x += (velx * multiplier); }
     public void place() {
         y = (int)(Math.random() * (301 - height)) + 300;
         x = 300 - width;

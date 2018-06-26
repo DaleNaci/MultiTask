@@ -90,6 +90,7 @@ public class Main extends Application {
                 checkpoint = 3000;
                 level = 5;
             }
+            System.out.println(level);
 
             /* ----------------------------------------
                -----------------Game 1-----------------
@@ -225,7 +226,7 @@ public class Main extends Application {
             }
 
             // Increasing Difficulty
-            if (level > 4) {
+            if (level == 4) {
                 enemy2.setMultiplier(1.2);
             }
 
@@ -339,11 +340,16 @@ public class Main extends Application {
             if (enemy4.getX() <= 0 && !enemy4.getHit())
                 gameOver(150, 450);
 
+            // Taking away the black screen
             if (level < 4) {
                 iv4.setOpacity(.7);
             } else {
                 iv4.setVisible(false);
             }
+
+            // Leveling Up
+            if (level == 5)
+                enemy4.setMultiplier(1.2);
 
 
             /* ----------------------------------------

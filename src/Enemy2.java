@@ -13,7 +13,7 @@ public class Enemy2 {
     private Rectangle2D hitbox; // Hitbox
     private boolean hit;        // Hit Delay
     private double framecount;  // Frame Count
-    private double multiplier;
+    private double multiplier;  // Y Multiplier
 
     public Enemy2() {
         image = new Image("game2/enemy.png");

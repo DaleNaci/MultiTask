@@ -1,6 +1,10 @@
-# MultiTask
-🎮A Java game that starts simple, but progressively gets more difficult as the tasks add up.
-
-The full version of the game will be released by June 12th.
-
-Game based off of a childhood game, [MultiTask](http://multitaskgames.com/multitask-game.html).
+<h1>MultiTask</h1>
+<p>A Java game that starts simple, but progressively gets more difficult as the tasks add up.
+Game based off of a childhood game, [MultiTask](http://multitaskgames.com/multitask-game.html).</p>
+<h2>How To Play</h2>
+<ul>
+  <li>Game 1: WASD</li>
+  <li>Game 2: Left & Right Keys</li>
+  <li>Game 3: Space Bar</li>
+  <li>Game 4: Up & Down Keys</li>
+</ul>

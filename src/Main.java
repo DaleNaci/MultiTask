@@ -14,8 +14,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.event.*;
 import javafx.scene.input.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import java.net.URL;
 
@@ -65,7 +63,7 @@ public class Main extends Application {
 
     // Miscellaneous Objects
     private Text scoreboard;
-    
+
 
     // Repeated actions
     public class AnimateObjects extends AnimationTimer {

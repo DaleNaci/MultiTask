@@ -90,7 +90,6 @@ public class Main extends Application {
                 checkpoint = 3000;
                 level = 5;
             }
-            System.out.println(level);
 
             /* ----------------------------------------
                -----------------Game 1-----------------
